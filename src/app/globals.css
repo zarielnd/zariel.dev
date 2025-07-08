@@ -41,4 +41,7 @@ body {
   .flex-center {
     @apply flex justify-center items-center;
   }
+  .floating-nav {
+    @apply bg-black rounded-lg border;
+  }
 }

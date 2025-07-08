@@ -8,7 +8,7 @@ const Hero = () => {
         <div id="video-frame" className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-black">
 
             <video src={videoRef}
-            autoPlay  
+            autoPlay
             loop
             muted
             className="absolute left-0 top-0 size-full object-cover object-center"
@@ -19,8 +19,8 @@ const Hero = () => {
                     <span className="block text-4xl mb-4">A Full stack Software Engineer</span>
                 </h1>
                 <Button
-                id="explore-button"
-                title="Explore"
+                id="contact-button"
+                title="contact"
                 leftIcon={<TiLocationArrow/>}
                 containerClass="bg-white/10 hover:bg-white/20 text-white flex-center gap-1"
                 />
