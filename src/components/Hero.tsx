@@ -1,9 +1,12 @@
 import { TiLocationArrow } from "react-icons/ti";
 import Button from "./Button";
 import HackedText from "./HackedText";
+import FlipWord from "./FlipWord";
 
 const Hero = () => {
     const videoSrc = `videos/vlhlll.mp4`;
+
+    const words = ["Secure", "Modern", "Scalable"];
   return (
     <div id="home" className="relative h-dvh w-screen overflow-x-hidden">
         <div id="video-frame" className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-black">
@@ -22,8 +25,16 @@ const Hero = () => {
                 <HackedText className="text-left font-bold text-white drop-shadow-lg select-none hero-heading">
                     Hi, I'm Zariel
                 </HackedText>
-                <HackedText className="block mb-4 hero-span">
+                <HackedText className="block mb-4 hero-span select-none">
                     A Full stack Software Engineer
+                </HackedText>
+                <HackedText className="block hero-span select-none">
+                    I'm Dedicated To Building
+                </HackedText>
+                <FlipWord words={words} duration={3000} className="text-4xl font-bold text-white select-none">
+                </FlipWord>
+                <HackedText className="block mb-4 hero-span select-none">
+                    Web Applications
                 </HackedText>
                 <Button
                 id="contact-button"
