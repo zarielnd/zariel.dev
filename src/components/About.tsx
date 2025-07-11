@@ -7,96 +7,73 @@ gsap.registerPlugin(ScrollTrigger);
 
 const About = () => {
     useGSAP(() => {
-        const titleContainerId = "#hacked-title-container";
-        const aboutTextId = "#about-text";
-
-        // Set initial states
-        gsap.set([titleContainerId, aboutTextId], { opacity: 0, y: 50 });
-
-        // Create ScrollTrigger with all callbacks
-        ScrollTrigger.create({
-            trigger: "#about",
-            start: "top top",
-            end: "bottom top",
-            onEnter: () => {
-                // Fade in when entering
-                gsap.to(titleContainerId, {
+        const titleElement = document.querySelector('#hacked-title-container');
+        
+        if (titleElement) {
+            gsap.fromTo(
+                titleElement,
+                { opacity: 0, y: -50 },
+                {
                     opacity: 1,
                     y: 0,
                     duration: 1,
-                    ease: "power2.out"
-                });
-                
-                gsap.to(aboutTextId, {
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: titleElement,
+                        start: 'top 80%',
+                        end: 'top 40%',
+                        scrub: true,
+                    },
+                }
+            );
+
+            ScrollTrigger.create({
+                trigger: titleElement,
+                start: 'top 80%',
+                end: 'top 40%',
+                onEnter: () => {
+                    const hackedTextElement = document.querySelector("#hacked-text-About-Me");
+                    if (hackedTextElement) {
+                        hackedTextElement.dispatchEvent(new Event('mouseover', { bubbles: true }));
+                    }
+                },
+
+            });
+        }
+
+        // Separate animation for the about text
+        const aboutTextElement = document.querySelector('#about-text');
+        if (aboutTextElement) {
+            gsap.fromTo(
+                aboutTextElement,
+                { opacity: 0, y: 50 },
+                {
                     opacity: 1,
                     y: 0,
                     duration: 0.8,
-                    ease: "power2.out",
-                    delay: 0.3
-                });
-
-                // Trigger HackedText animation
-                const hackedTextElement = document.querySelector("#hacked-text-About-Me");
-                if (hackedTextElement) {
-                    hackedTextElement.dispatchEvent(new Event('mouseover'));
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: aboutTextElement,
+                        start: 'top 85%',
+                        end: 'top 45%',
+                        scrub: true,
+                    },
                 }
-            },
-            onLeave: () => {
-                // Fade out when leaving (scrolling down)
-                gsap.to([titleContainerId, aboutTextId], {
-                    opacity: 0,
-                    y: -50,
-                    duration: 0.5,
-                    ease: "power2.in"
-                });
-            },
-            onEnterBack: () => {
-                // Fade in when scrolling back up
-                gsap.to(titleContainerId, {
-                    opacity: 1,
-                    y: 0,
-                    duration: 1,
-                    ease: "power2.out"
-                });
-                
-                gsap.to(aboutTextId, {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.8,
-                    ease: "power2.out",
-                    delay: 0.3
-                });
-
-                // Trigger HackedText animation
-                const hackedTextElement = document.querySelector("#hacked-text-About-Me");
-                if (hackedTextElement) {
-                    hackedTextElement.dispatchEvent(new Event('mouseover'));
-                }
-            },
-            onLeaveBack: () => {
-                // Fade out when scrolling back up (leaving the section)
-                gsap.to([titleContainerId, aboutTextId], {
-                    opacity: 0,
-                    y: 50,
-                    duration: 0.5,
-                    ease: "power2.in"
-                });
-            }
-        });
-
+            );
+        }
     }, []);
 
     return (
         <div id="about" className="relative h-dvh w-screen overflow-x-hidden bg-black flex flex-col justify-center items-center">
             <div id="hacked-title-container" className="mb-8">
-                <HackedText 
+                <HackedText                     
                     className="text-center text-white drop-shadow-lg select-none hero-heading"
                     playOnLoad={false}
                 >
                     About Me
                 </HackedText>
             </div>
-            <p 
+            <p                 
                 id="about-text"
                 className="max-w-2xl text-center text-lg text-white"
             >
@@ -106,6 +83,6 @@ const About = () => {
             </p>
         </div>
     );
-}
+};
 
 export default About;

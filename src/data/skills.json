@@ -1,0 +1,19 @@
+{
+  "categories": [
+    {
+      "id": "frameworks",
+      "title": "Frameworks",
+      "items": ["Next.js", "React", "DotNet", "SpringBoot"]
+    },
+    {
+      "id": "languages",
+      "title": "Languages",
+      "items": ["HTML", "CSS", "JavaScript", "TypeScript", "Python", "Java", "CSharp"]
+    },
+    {
+      "id": "tools",
+      "title": "Tools",
+      "items": ["VS Code", "Github", "Gitlab", "Git", "Docker", ""]
+    }
+  ]
+}

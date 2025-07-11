@@ -4,6 +4,8 @@ import Hero from '../components/Hero';
 import About from '../components/About';
 import Navbar from '../components/Navbar';
 import SmoothScroll from '../hooks/SmoothScroll';
+import Skills from '@/components/Skills';
+import Experience from '@/components/Experience';
 
 const App = () => {
   SmoothScroll();
@@ -13,6 +15,8 @@ const App = () => {
       <Navbar />
       <Hero />
       <About />
+      <Skills />
+      <Experience />
     </main>
   )
 };

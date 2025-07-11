@@ -12,6 +12,19 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --animate-orbit: orbit calc(var(--duration) * 1s) linear infinite;
+ 
+  @keyframes orbit {
+    0% {
+      transform: rotate(calc(var(--angle) * 1deg))
+        translateY(calc(var(--radius) * 1px)) rotate(calc(var(--angle) * -1deg));
+    }
+    100% {
+      transform: rotate(calc(var(--angle) * 1deg + 360deg))
+        translateY(calc(var(--radius) * 1px))
+        rotate(calc((var(--angle) * -1deg) - 360deg));
+    }
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -52,4 +65,20 @@ body {
   .hero-span{
     @apply text-2xl sm:text-2xl md:text-3xl lg:text-4xl;
   }
+  .border-hsla{
+    @apply border border-white/20
+  }
+  .backface-hidden {
+  backface-visibility: hidden;
+  }
+
+  /* Ensure 3D transforms work properly */
+  .middle-card {
+    transform-style: preserve-3d;
+  }
+
+  .middle-card > div {
+    transform-style: preserve-3d;
+  }
+
 }
