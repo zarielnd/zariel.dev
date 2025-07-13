@@ -55,250 +55,204 @@ const BentoCard = ({ title, skills, isMiddleCard = false }: BentoCardProps) => {
   const validSkills = skills.filter(skill => skill.trim() !== '')
 
   useGSAP(() => {
-    if (cardRef.current) {
-      let entranceTl: gsap.core.Timeline
-      let flipTl: gsap.core.Timeline
-      let pinScrollTrigger: ScrollTrigger
+    if (!cardRef.current) return
 
-      // Set initial state
-      gsap.set(cardRef.current, {
-        opacity: 0,
-        scale: 0.8,
-        y: 50
-      })
+    let entranceTl: gsap.core.Timeline
+    let flipTl: gsap.core.Timeline
+    let pinScrollTrigger: ScrollTrigger
 
-      // Create entrance timeline
-      entranceTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: cardRef.current,
-          start: "top 85%",
-          end: "top 60%",
-          toggleActions: "play none none reverse"
-        }
-      })
+    // Handle page refresh properly
+    const ctx = gsap.context(() => {
+      // This ensures animations are set up correctly on refresh
+    }, cardRef)
 
-      entranceTl.to(cardRef.current, {
-        opacity: 1,
-        scale: 1,
-        y: 0,
-        duration: 0.6,
-        ease: "back.out(1.7)"
-      })
+    // Check if we should show the card immediately (for page refresh scenarios)
+    const shouldShowImmediately = () => {
+      const trigger = cardRef.current
+      if (!trigger) return false
+      
+      const rect = trigger.getBoundingClientRect()
+      const windowHeight = window.innerHeight
+      const triggerPoint = windowHeight * 0.85 // 85% from top
+      
+      return rect.top < triggerPoint
+    }
 
-      // Animate individual skill items with stagger
+    // Set initial states - but check if we should show immediately
+    if (shouldShowImmediately()) {
+      // Card is already in view, show it immediately
+      gsap.set(cardRef.current, { opacity: 1, scale: 1, y: 0 })
       const skillItems = skillsRef.current?.children
       if (skillItems) {
-        gsap.set(skillItems, {
-          opacity: 0,
-          scale: 0.5,
-          y: 20
-        })
+        gsap.set(skillItems, { opacity: 1, scale: 1, y: 0 })
+      }
+    } else {
+      // Card is not in view, set up for animation
+      gsap.set(cardRef.current, { opacity: 0, scale: 0.8, y: 50 })
+      const skillItems = skillsRef.current?.children
+      if (skillItems) {
+        gsap.set(skillItems, { opacity: 0, scale: 0.5, y: 20 })
+      }
+    }
 
-        gsap.to(skillItems, {
+    // Simple entrance animation for all cards
+    entranceTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: cardRef.current,
+        start: "top 85%",
+        end: "top 60%",
+        toggleActions: "play none none reverse",
+        immediateRender: false,
+        refreshPriority: 1,
+        onRefresh: () => {
+          // On refresh, check if we should show immediately
+          if (shouldShowImmediately()) {
+            gsap.set(cardRef.current, { opacity: 1, scale: 1, y: 0 })
+            const skillItems = skillsRef.current?.children
+            if (skillItems) {
+              gsap.set(skillItems, { opacity: 1, scale: 1, y: 0 })
+            }
+          }
+        }
+      }
+    })
+
+    const skillItems = skillsRef.current?.children
+
+    // Only animate if not already visible
+    if (!shouldShowImmediately()) {
+      // Entrance animations
+      entranceTl
+        .to(cardRef.current, {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          duration: 0.6,
+          ease: "back.out(1.7)",
+          immediateRender: false
+        })
+      
+      // Add skill items animation only if they exist
+      if (skillItems && skillItems.length > 0) {
+        entranceTl.to(skillItems, {
           opacity: 1,
           scale: 1,
           y: 0,
           duration: 0.4,
           ease: "back.out(1.7)",
           stagger: 0.1,
-          scrollTrigger: {
-            trigger: cardRef.current,
-            start: "top 80%",
-            end: "top 55%",
-            toggleActions: "play none none reverse"
-          }
-        })
+          immediateRender: false
+        }, "-=0.3")
       }
+    }
 
-      // Special flip animation for middle card
-      if (isMiddleCard && frontRef.current && backRef.current) {
-        // Set initial states for proper 3D flip
-        gsap.set(cardRef.current, {
-          transformStyle: "preserve-3d",
-          perspective: 1000
-        })
-
-        gsap.set(frontRef.current, {
-          rotationY: 0,
-          backfaceVisibility: "hidden"
-        })
-
-        gsap.set(backRef.current, {
-          rotationY: 180,
-          backfaceVisibility: "hidden"
-        })
-
-        // Create flip timeline with slower durations
-        flipTl = gsap.timeline({ paused: true })
-
-        // Phase 1: Scale up and start flip (slower)
-        flipTl.to(cardRef.current, {
-          scale: 1.3,
-          rotationY: 45,
-          duration: 0.8, // Increased from 0.3
-          ease: "power2.out"
-        })
-
-        // Phase 2: Complete the flip (slower)
-        flipTl.to(cardRef.current, {
-          rotationY: 180,
-          duration: 1.0, // Increased from 0.4
-          ease: "power2.inOut"
-        })
-
-        // Phase 3: Scale up to fill screen (slower)
-        flipTl.to(cardRef.current, {
-          scale: 4,
-          duration: 0.8, // Increased from 0.3
-          ease: "power2.in"
-        })
-
-        // Fade out other cards (slower)
-        flipTl.to('.bento-card:not(.middle-card)', {
-          opacity: 0.2,
-          duration: 1.0, // Increased from 0.5
-          ease: "power2.out"
-        }, 0.4) // Start slightly after flip begins
-
-        pinScrollTrigger = ScrollTrigger.create({
-          trigger: ".skills-container",
-          start: "center center",
-          end: "+=500vh", // Increased from +=300vh for longer scroll distance
-          scrub: 8, // Increased from 2 for slower animation
-          pin: true,
-          pinSpacing: true,
-          onUpdate: (self) => {
-            const progress = self.progress
-            const card = cardRef.current
-            if (card) {
-              // Progress the flip timeline based on scroll
-              flipTl.progress(progress)
-            }
-          },
-          onEnter: () => {
-            const card = cardRef.current
-            if (card) {
-              // Store original state before modifications
-              gsap.set(card, {
-                opacity: 1,
-                scale: 1,
-                y: 0,
-                zIndex: 100,
-                rotationY: 0
-              })
-
-              // Re-apply 3D setup for flip
-              gsap.set(card, {
-                transformStyle: "preserve-3d",
-                perspective: 1000
-              })
-
-              // Reset flip timeline to beginning
-              flipTl.progress(0)
-            }
-          },
-          onEnterBack: () => {
-            const card = cardRef.current
-            if (card) {
-              // Ensure card is visible and properly positioned
-              gsap.set(card, {
-                opacity: 1,
-                y: 0,
-                zIndex: 100,
-                scale: 1,
-                rotationY: 0,
-                clearProps: "transform"
-              })
-
-              // Re-apply 3D setup
-              gsap.set(card, {
-                transformStyle: "preserve-3d",
-                perspective: 1000
-              })
-
-              // Reset flip timeline
-              flipTl.progress(0)
-            }
-
-            // Reset other cards
-            gsap.set('.bento-card:not(.middle-card)', { opacity: 1 })
-          },
-          onLeaveBack: () => {
-  const card = cardRef.current
-  if (card) {
-    // First, reset the flip timeline's progress
-    flipTl.progress(0)
-    
-    // Clear transforms more carefully
-    gsap.set(card, {
-      clearProps: "transform,rotationY,scale,perspective,transformStyle"
-    })
-    
-    // Reset to a stable visible state
-    gsap.set(card, {
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      x: 0,
-      zIndex: 1,
-      rotationY: 0,
-      rotationX: 0,
-      transformStyle: "preserve-3d",
-      perspective: 1000,
-      visibility: "visible"
-    })
-    
-    // Ensure front and back faces are properly reset
-    if (frontRef.current && backRef.current) {
+    // Middle card flip animation
+    if (isMiddleCard && frontRef.current && backRef.current) {
+      // Set up 3D properties
+      gsap.set(cardRef.current, {
+        transformStyle: "preserve-3d",
+        perspective: 1000
+      })
+      
       gsap.set(frontRef.current, {
         rotationY: 0,
         backfaceVisibility: "hidden"
       })
+      
       gsap.set(backRef.current, {
         rotationY: 180,
         backfaceVisibility: "hidden"
       })
-    }
-    
-    // Make sure other cards are visible
-    gsap.set('.bento-card:not(.middle-card)', {
-      opacity: 1,
-      clearProps: "transform"
-    })
-    
-    // Force a refresh of ScrollTrigger calculations
-    ScrollTrigger.refresh()
-  }
-},
 
-
-          onLeave: () => {
-            console.log("Card flipped to white mask - ready for next section")
-          }
+      // Create flip timeline
+      flipTl = gsap.timeline({ paused: true })
+        .to(cardRef.current, {
+          rotationY: 90,
+          scale: 1.5,
+          duration: 1.0,
+          ease: "power2.out"
         })
-      }
+        .to('.bento-card:not(.middle-card)', {
+          opacity: 0.1,
+          duration: 1.0,
+          ease: "power2.out"
+        }, 0.2)
+        .to(cardRef.current, {
+          rotationY: 180,
+          scale: 5,
+          duration: 1.5,
+          ease: "power2.inOut"
+        })
 
-      // Cleanup function
-      // Cleanup function
-      return () => {
-        // Reset card to visible state before cleanup
-        if (cardRef.current) {
-          gsap.set(cardRef.current, {
+      // ScrollTrigger with better refresh handling
+      pinScrollTrigger = ScrollTrigger.create({
+        trigger: ".skills-container",
+        start: "center center",
+        end: "+=500vh",
+        scrub: 8,
+        pin: true,
+        pinSpacing: true,
+        onUpdate: (self) => {
+          flipTl.progress(self.progress)
+        },
+        onEnter: () => {
+          gsap.set(cardRef.current, { zIndex: 100 })
+        },
+        onLeave: () => {
+          console.log("Card flipped to white mask - ready for next section")
+        },
+        onLeaveBack: () => {
+          // Reset everything properly
+          flipTl.progress(0)
+          gsap.set(cardRef.current, { 
+            zIndex: 10,
+            clearProps: "transform" 
+          })
+          gsap.set('.bento-card:not(.middle-card)', { 
             opacity: 1,
-            scale: 1,
-            clearProps: "transform"
+            clearProps: "transform" 
+          })
+          
+          // Re-establish 3D properties
+          gsap.set(cardRef.current, {
+            transformStyle: "preserve-3d",
+            perspective: 1000
+          })
+          gsap.set(frontRef.current, {
+            rotationY: 0,
+            backfaceVisibility: "hidden"
+          })
+          gsap.set(backRef.current, {
+            rotationY: 180,
+            backfaceVisibility: "hidden"
+          })
+        },
+        onRefresh: (self) => {
+          // Use a slight delay to ensure DOM is ready
+          requestAnimationFrame(() => {
+            flipTl.progress(self.progress)
+            if (self.progress > 0) {
+              gsap.set(cardRef.current, { zIndex: 100 })
+            }
           })
         }
+      })
+    }
 
-        entranceTl?.kill()
-        flipTl?.kill()
-        pinScrollTrigger?.kill()
-      }
+    // Handle page refresh - ensure ScrollTrigger evaluates current position
+    requestAnimationFrame(() => {
+      ScrollTrigger.refresh()
+    })
 
+    // Cleanup
+    return () => {
+      entranceTl?.kill()
+      flipTl?.kill()
+      pinScrollTrigger?.kill()
     }
   }, [validSkills, isMiddleCard])
 
-  // Real-time tilt effect (disabled for middle card)
+  // Mouse tilt effect (non-middle cards only)
   useEffect(() => {
     const card = cardRef.current
     if (!card || isMiddleCard) return
@@ -328,18 +282,12 @@ const BentoCard = ({ title, skills, isMiddleCard = false }: BentoCardProps) => {
       }, 300)
     }
 
-    const handleMouseEnter = () => {
-      card.style.transition = ''
-    }
-
     card.addEventListener('mousemove', handleMouseMove)
     card.addEventListener('mouseleave', handleMouseLeave)
-    card.addEventListener('mouseenter', handleMouseEnter)
 
     return () => {
       card.removeEventListener('mousemove', handleMouseMove)
       card.removeEventListener('mouseleave', handleMouseLeave)
-      card.removeEventListener('mouseenter', handleMouseEnter)
     }
   }, [isMiddleCard])
 
@@ -403,9 +351,7 @@ const BentoCard = ({ title, skills, isMiddleCard = false }: BentoCardProps) => {
           </div>
         </>
       ) : (
-        <div
-          className="bg-white border-2 border-black p-6 rounded-lg flex flex-col hover:shadow-2xl h-full"
-        >
+        <div className="bg-white border-2 border-black p-6 rounded-lg flex flex-col hover:shadow-2xl h-full">
           <h3 className="text-black text-2xl font-bold mb-6 group-hover:text-gray-800 transition-colors duration-300">
             {title}
           </h3>

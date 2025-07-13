@@ -81,4 +81,8 @@ body {
     transform-style: preserve-3d;
   }
 
+  .hover-animation {
+  @apply hover:-translate-y-1 duration-200;
+}
+
 }

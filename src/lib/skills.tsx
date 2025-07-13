@@ -1,5 +1,5 @@
 // lib/skills.ts
-import skillsData from '@/data/skills.json'
+import skillsData from '@/constants/skills.json'
 
 export interface SkillCategory {
   id: string
