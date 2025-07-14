@@ -32,7 +32,7 @@ const Project = ({project, setPreview}:ProjectProps) => {
 
   return (
     <>
-      <div className='flex-wrap items-center justify-between pt-10 px-9 space-y-14 sm:flex sm:space-y-0'
+      <div className='flex-wrap items-center justify-between pt-10 space-y-14 sm:flex sm:space-y-0'
       onMouseEnter={()=>setPreview(image)}
       onMouseLeave={()=>setPreview(undefined)}>
         <div>

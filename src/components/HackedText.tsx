@@ -1,112 +1,103 @@
-// components/HackedText.tsx
 import React, { useEffect, useRef, useState } from 'react';
 
 const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 interface HackedTextProps {
-  children: string; // Restrict children to string for simplicity
-  className?: string; // Allow passing additional Tailwind classes
-  tag?: keyof React.JSX.IntrinsicElements; // Allow specifying the HTML tag (e.g., 'h1', 'p', 'span')
+  id?: string;
+  children: string;
+  className?: string;
+  tag?: keyof React.JSX.IntrinsicElements;
   playOnLoad?: boolean;
 }
 
-const HackedText: React.FC<HackedTextProps> = ({ children, className, tag: Tag = 'span', playOnLoad = true }) => {
-  const [displayText, setDisplayText] = useState(children); // State to hold the currently displayed text
-  const initialText = useRef<string>(children); // Store the original text
-  const intervalRef = useRef<NodeJS.Timeout | null>(null); // Use ref to store interval
+const HackedText: React.FC<HackedTextProps> = ({
+  id,
+  children,
+  className,
+  tag: Tag = 'span',
+  playOnLoad = true,
+}) => {
+  const lines = children.split('\n');
+  const initialLines = useRef<string[]>(lines);
+  const intervalRefs = useRef<(NodeJS.Timeout | null)[]>([]);
+  const [displayLines, setDisplayLines] = useState<string[]>(lines);
 
-  // Update initialText and reset displayText if children prop changes
   useEffect(() => {
-    initialText.current = children;
-    setDisplayText(children); // Reset displayed text when children change
+    initialLines.current = children.split('\n');
+    setDisplayLines(initialLines.current);
   }, [children]);
 
-  // Function to run the hacking animation
-  const runHackingAnimation = () => {
+  const runLineAnimation = (lineIndex: number) => {
     let iteration = 0;
+    const targetText = initialLines.current[lineIndex];
 
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
+    if (intervalRefs.current[lineIndex]) {
+      clearInterval(intervalRefs.current[lineIndex]!);
     }
 
-    intervalRef.current = setInterval(() => {
-      const targetText = initialText.current; // The full original text
-
-      // Use setDisplayText to update the state, letting React re-render
-      setDisplayText((prevText) => {
-        return targetText
+    intervalRefs.current[lineIndex] = setInterval(() => {
+      setDisplayLines((prevLines) => {
+        const newLines = [...prevLines];
+        newLines[lineIndex] = targetText
           .split("")
           .map((char, index) => {
-            if (index < iteration) {
-              return char; // Reveal the original character
-            }
-
-            // Preserve whitespace and newlines if they are not meant to be randomized
-            if (char === ' ' || char === '\n' || char === '\t') {
-                return char;
-            }
-
+            if (index < iteration) return char;
+            if (char === " " || char === "\n" || char === "\t") return char;
             return letters[Math.floor(Math.random() * letters.length)];
           })
           .join("");
+        return newLines;
       });
 
-      if (iteration >= targetText.length) {
-        if (intervalRef.current) {
-          clearInterval(intervalRef.current);
-        }
-      }
       iteration += 1 / 3;
+      if (iteration >= targetText.length) {
+        clearInterval(intervalRefs.current[lineIndex]!);
+      }
     }, 30);
   };
 
-  // Effect to run animation on load if playOnLoad is true
+  const runAllAnimations = () => {
+    lines.forEach((_, idx) => runLineAnimation(idx));
+  };
+
   useEffect(() => {
     if (playOnLoad) {
-      // Add a small delay to ensure the component is fully mounted
       const timeout = setTimeout(() => {
-        runHackingAnimation();
+        runAllAnimations();
       }, 100);
-
       return () => clearTimeout(timeout);
     }
-  }, [playOnLoad]);
+  }, [playOnLoad, children]);
 
-  // Effect for the mouseover event
   useEffect(() => {
-    const handleMouseOver = () => {
-      runHackingAnimation();
-    };
-
-    // Attach event listener only if the component is mounted
-    const currentTextElement = document.getElementById(`hacked-text-${children.replace(/\s/g, '-')}`);
+    const elementId = id ?? `hacked-text-${children.replace(/\s/g, '-')}`;
+    const currentTextElement = document.getElementById(elementId);
     if (currentTextElement) {
+      const handleMouseOver = () => {
+        runAllAnimations();
+      };
       currentTextElement.addEventListener('mouseover', handleMouseOver);
-    }
-
-    // Cleanup function to remove event listener and clear interval
-    return () => {
-      if (currentTextElement) {
+      return () => {
         currentTextElement.removeEventListener('mouseover', handleMouseOver);
-      }
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-    };
-  }, [children]); // Re-run effect if children changes
+        intervalRefs.current.forEach((interval) => {
+          if (interval !== null) clearInterval(interval);
+        });
+
+      };
+    }
+  }, [children]);
 
   return (
     <Tag
-      // Assign a unique ID for the event listener to attach to
-      id={`hacked-text-${children.replace(/\s/g, '-')}`}
+      id={id ?? `hacked-text-${children.replace(/\s/g, '-')}`}
       className={`
-        font-['Space Mono'] text-white text-clamp-3rem-10vw-10rem px-clamp-1rem-2vw-3rem rounded-clamp-0-4rem-0-75vw-1rem
-        transition-all duration-300
-        whitespace-pre-wrap
+        font-['Space Mono'] text-white text-clamp-3rem-10vw-10rem 
+        px-clamp-1rem-2vw-3rem rounded-clamp-0-4rem-0-75vw-1rem 
+        transition-all duration-300 whitespace-pre-wrap 
         ${className || ''}
       `}
     >
-      {displayText} {/* Render the state-managed text */}
+      {displayLines.join('\n')}
     </Tag>
   );
 };

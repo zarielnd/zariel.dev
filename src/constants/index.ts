@@ -32,25 +32,25 @@ export const myProjects = [
 {
     id: 2,
     title: 'Scientific Project Management System',
-    description: 'This is a project for my university',
+    description: "This is a project for my university's SMIA office",
     subDescription: [
-        'Making animation with GSAP',
-        'Learning Next.js framework',
+        'Making security and scalable web application',
+        'Applying .NET Framework',
         'Designing the website'
     ],
-    href: 'https://example.com/project-one',
+    href: 'https://science.fpt.edu.vn/',
     logo: 'https://example.com/logo1.png',
-    image: '/img/portfolio.png',
+    image: '/img/fpt.png',
     tags: [
         {
             id: 1,
-            name: 'React',
-            path: 'https://example.com/react',
+            name: '.NET',
+            path: '/logos/dotnet.svg',
         },
         {
             id: 2,
-            name: 'Next.js',
-            path: 'https://example.com/nextjs',
+            name: 'SQL Server',
+            path: '/logos/sqlserver.svg',
         }
     ]
 }

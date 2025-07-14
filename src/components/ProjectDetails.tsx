@@ -71,7 +71,7 @@ const ProjectDetails = ({project, onClose}:ProjectProps) => {
                             className='rounded-lg size-10 hover-animation'></img>
                         ))}
                     </div>
-                    <a href={project.href} className='inline-flex items-center gap-1 font-medium hover-animation cursor-pointer'>
+                    <a href={project.href} className='inline-flex items-center gap-1 font-medium hover-animation cursor-pointer' target="_blank">
                         View Project <TiArrowRight/>
                     </a>
                 </div>

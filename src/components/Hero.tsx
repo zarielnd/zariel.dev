@@ -80,7 +80,7 @@ const Hero = () => {
     });
 
   return (
-    <div id="home" className="relative h-dvh w-screen overflow-x-hidden">
+    <div id="home" className="relative h-dvh w-screen overflow-x-hidden bg-black">
         <div id="video-frame" className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-black">
 
             <video src={videoSrc}
@@ -112,6 +112,7 @@ const Hero = () => {
                 id="contact-button"
                 title="contact"
                 leftIcon={<TiLocationArrow/>}
+                scrollTarget="contact"
                 containerClass="bg-white/10 hover:bg-white/20 text-white flex-center gap-1"
                 />
             </div>

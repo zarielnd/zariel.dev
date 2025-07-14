@@ -18,10 +18,10 @@ const Projects = () => {
   const [preview, setPreview] = useState<string | undefined>(undefined);
 
   return (
-    <section className='relative c-space section-spacing bg-white'
+    <section className='relative c-space bg-white'
       onMouseMove={handleMouseMove}
     >
-      <HackedText className='text-left font-bold px-8 !text-black select-none hero-heading'>
+      <HackedText className='text-left font-bold !text-black select-none hero-heading'>
         My Selected Projects
       </HackedText>
       <div className='bg-gradient-to-r from-transparent via-neutral-950 to-transparent mt-12 h-[1px] w-full' />

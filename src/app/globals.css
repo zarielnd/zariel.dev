@@ -84,5 +84,23 @@ body {
   .hover-animation {
   @apply hover:-translate-y-1 duration-200;
 }
+.c-space {
+  @apply sm:px-10 px-5 lg:px-15;
+}
+.section-spacing {
+  @apply min-h-screen;
+}
+
+.field-label {
+  @apply text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70;
+}
+
+.field-input {
+  @apply w-full min-h-10 rounded-md px-3 py-2 text-sm bg-white/10 transition duration-200 placeholder-neutral-500 border border-white/10 mt-2;
+}
+
+.field-input-focus {
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20;
+}
 
 }
