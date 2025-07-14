@@ -34,7 +34,11 @@ export default function ExperienceTimeline() {
       if (!timelineContainer) return;
       
       const items = gsap.utils.toArray(".timeline-item") as HTMLElement[];
-      const scrollDistance = timelineContainer.scrollWidth - document.documentElement.clientWidth;
+      
+      // Force a minimum width for the timeline to ensure proper scrolling
+      const minWidth = window.innerWidth * 2; // At least 2x viewport width
+      const actualWidth = timelineContainer.scrollWidth;
+      const scrollDistance = Math.max(actualWidth - window.innerWidth, minWidth);
       
       // Main horizontal scroll animation
       const horizontalTween = gsap.to(timelineContainer, {
@@ -44,20 +48,21 @@ export default function ExperienceTimeline() {
           trigger: component.current,
           pin: true,
           scrub: 1,
-          end: () => `+=${Math.max(scrollDistance * 0.6, window.innerHeight)}`,
+          end: () => `+=${scrollDistance}`,
           anticipatePin: 1,
         }
       });
 
-      // Animate the progress line
+      // Simple progress line animation
       gsap.to(".timeline-line-progress", {
-        width: "100%",
+        scaleX: 1,
+        transformOrigin: "left center",
         ease: 'none',
         scrollTrigger: {
           trigger: component.current,
           scrub: 1,
           start: 'top top',
-          end: () => `+=${Math.max(scrollDistance * 0.6, window.innerHeight)}`,
+          end: () => `+=${scrollDistance}`,
         }
       });
 
@@ -76,15 +81,12 @@ export default function ExperienceTimeline() {
         });
       });
 
-      // Title and text animations - fresh approach
+      // Title and text animations
       const titleElement = document.querySelector('#hacked-title-container');
       const aboutTextElement = document.querySelector('#exp-text');
       
       if (titleElement) {
-        // Set initial state explicitly
         gsap.set(titleElement, { opacity: 0, y: -30 });
-        
-        // Create the animation
         gsap.to(titleElement, {
           opacity: 1,
           y: 0,
@@ -95,11 +97,9 @@ export default function ExperienceTimeline() {
             start: 'top 90%',
             end: 'top 50%',
             scrub: 1,
-            once: false
           }
         });
         
-        // Trigger hacked text effect
         ScrollTrigger.create({
           trigger: titleElement,
           start: 'top 85%',
@@ -115,9 +115,7 @@ export default function ExperienceTimeline() {
       }
       
       if (aboutTextElement) {
-        // Set initial state
         gsap.set(aboutTextElement, { opacity: 0, y: 30 });
-        
         gsap.to(aboutTextElement, {
           opacity: 1,
           y: 0,
@@ -139,7 +137,6 @@ export default function ExperienceTimeline() {
 
   return (
     <div id="work" className="bg-gray-50">
-      {/* Optional: Add a section before the timeline */}
       <div className="relative bg-white flex items-center justify-center mt-[80vh]">
         <div className="text-center">
           <div id="hacked-title-container" >
@@ -151,21 +148,17 @@ export default function ExperienceTimeline() {
         </div>
       </div>
 
-      {/* Timeline Section - Reduced height for faster scrolling */}
       <div ref={component} className="relative h-[150vh] bg-white overflow-hidden">
         <div className="h-screen w-full flex items-center relative">
-          {/* The main timeline container that scrolls horizontally */}
+          {/* Fixed progress line that doesn't move with container */}
+          <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gray-300 -translate-y-1/2 z-0">
+            <div className="h-0.5 bg-black timeline-line-progress w-full" style={{transform: 'scaleX(0)'}}></div>
+          </div>
+          
           <div ref={slider} className="flex items-center absolute left-0 px-[25vw] min-w-max">
-            {/* The background line - positioned to align with nodes */}
-            <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gray-300 -translate-y-1/2 z-0">
-              {/* The progress line that animates */}
-              <div className="h-0.5 bg-black timeline-line-progress" style={{width: '0%'}}></div>
-            </div>
             
-            {/* Map through data to create timeline items */}
             {experienceData.map((exp, index) => (
-              <div key={exp.id} className="timeline-item relative flex flex-col items-center" style={{marginRight: index === experienceData.length - 1 ? '0' : '200px'}}>
-                {/* Content Box - Positioned based on index (even/odd) */}
+              <div key={exp.id} className="timeline-item relative flex flex-col items-center" style={{marginRight: index === experienceData.length - 1 ? '0' : '60vw'}}>
                 <div className={`w-72 text-center bg-white border border-gray-200 rounded-lg p-6 shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 ${
                   index % 2 === 0 
                     ? 'order-1 mb-20' 
@@ -177,9 +170,7 @@ export default function ExperienceTimeline() {
                   <p className="text-gray-600 text-sm mt-3 leading-relaxed">{exp.description}</p>
                 </div>
                 
-                {/* Node - This sits on the main timeline */}
                 <div className="order-2 w-4 h-4 rounded-full bg-black border-4 border-white shadow-lg relative z-10 transition-all duration-300 hover:scale-125">
-                  {/* Vertical line connecting node to content */}
                   <div className={`absolute left-1/2 -translate-x-1/2 w-0.5 bg-gray-300 ${
                     index % 2 === 0 
                       ? 'bottom-full h-16 mb-2' 
