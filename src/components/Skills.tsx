@@ -1,4 +1,4 @@
-import React, { use } from 'react'
+import React from 'react'
 import HackedText from './HackedText'
 import BentoCard from './BentoCard'
 import { getSkillCategories } from '@/lib/skills'
