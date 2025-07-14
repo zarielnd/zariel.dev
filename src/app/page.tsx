@@ -1,5 +1,4 @@
 "use client";
-import React, { useRef, useEffect, useState, useMemo, use } from 'react';
 import Hero from '../components/Hero';
 import About from '../components/About';
 import Navbar from '../components/Navbar';
@@ -12,6 +11,7 @@ import Footer from '@/components/Footer'
 import KprFooter from '@/components/KprFooter';
 
 const App = () => {
+  
   SmoothScroll();
   return(
     <div>

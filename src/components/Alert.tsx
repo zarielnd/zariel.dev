@@ -1,8 +1,8 @@
 import React from 'react'
-import { motion, AnimatePresence, scale } from "motion/react"
+import { motion, AnimatePresence} from "motion/react"
 
 interface AlertProps {
-    type: any,
+    type: string,
     text: string
 }
 

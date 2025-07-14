@@ -1,6 +1,5 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import HackedText from './HackedText';
-import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
@@ -58,7 +57,7 @@ export default function ExperienceTimeline() {
   useLayoutEffect(() => {
     if (!slider.current || !component.current) return;
     
-    let ctx = gsap.context(() => {
+    const ctx = gsap.context(() => {
       const timelineContainer = slider.current;
       if (!timelineContainer) return;
       
@@ -91,7 +90,7 @@ export default function ExperienceTimeline() {
       });
 
       // Animate each timeline item
-      items.forEach((item: HTMLElement, index) => {
+      items.forEach((item: HTMLElement) => {
         gsap.from(item, {
           y: 100,
           opacity: 0,

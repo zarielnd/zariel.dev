@@ -60,15 +60,6 @@ const BentoCard = ({ title, skills, isMiddleCard = false }: BentoCardProps) => {
     let flipTl: gsap.core.Timeline
     let pinScrollTrigger: ScrollTrigger
 
-    const ctx = gsap.context(() => {
-      // Set initial visible state for all cards (no entrance animation)
-      gsap.set(cardRef.current, { opacity: 1, scale: 1, y: 0 })
-      const skillItems = skillsRef.current?.children
-      if (skillItems) {
-        gsap.set(skillItems, { opacity: 1, scale: 1, y: 0 })
-      }
-    }, cardRef)
-
     // Middle card flip animation
     if (isMiddleCard && frontRef.current && backRef.current) {
       // Set up 3D properties

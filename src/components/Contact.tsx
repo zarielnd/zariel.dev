@@ -62,9 +62,10 @@ const Contact = () => {
       <div className='flex flex-col items-center justify-center max-w-md p-5 mx-auto border border-black
         rounded-2xl bg-white'>
         <div className='flex flex-col items-start w-full gap-5 mb-10'>
-          <h2 className='text-3xl text-black'>Let's Talk</h2>
-          <p className='text-gray-600'>Whether you're looking to build a new website, improve your existing
-            platform, or bring a unique project to life, I'm here to help
+          <h2 className='text-3xl text-black'>Let&rsquo;s Talk</h2>
+          <p className='text-gray-600'>
+            Whether you&rsquo;re looking to build a new website, improve your existing
+            platform, or bring a unique project to life, I&rsquo;m here to help
           </p>
         </div>
         <form className='w-full' onSubmit={handleSubmit}>
