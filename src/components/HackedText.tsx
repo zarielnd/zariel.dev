@@ -57,8 +57,8 @@ const HackedText: React.FC<HackedTextProps> = ({
   }, []);
 
   const runAllAnimations = useCallback(() => {
-    lines.forEach((_, idx) => runLineAnimation(idx));
-  }, [lines, runLineAnimation]);
+    initialLines.current.forEach((_, idx) => runLineAnimation(idx));
+  }, [runLineAnimation]);
 
   useEffect(() => {
     if (playOnLoad) {
