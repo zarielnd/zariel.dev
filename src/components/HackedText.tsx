@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 
 const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -27,7 +27,7 @@ const HackedText: React.FC<HackedTextProps> = ({
     setDisplayLines(initialLines.current);
   }, [children]);
 
-  const runLineAnimation = (lineIndex: number) => {
+  const runLineAnimation = useCallback((lineIndex: number) => {
     let iteration = 0;
     const targetText = initialLines.current[lineIndex];
 
@@ -54,11 +54,11 @@ const HackedText: React.FC<HackedTextProps> = ({
         clearInterval(intervalRefs.current[lineIndex]!);
       }
     }, 30);
-  };
+  }, []);
 
-  const runAllAnimations = () => {
+  const runAllAnimations = useCallback(() => {
     lines.forEach((_, idx) => runLineAnimation(idx));
-  };
+  }, [lines, runLineAnimation]);
 
   useEffect(() => {
     if (playOnLoad) {
@@ -67,7 +67,7 @@ const HackedText: React.FC<HackedTextProps> = ({
       }, 100);
       return () => clearTimeout(timeout);
     }
-  }, [playOnLoad, children]);
+  }, [playOnLoad, children, runAllAnimations]);
 
   useEffect(() => {
     const elementId = id ?? `hacked-text-${children.replace(/\s/g, '-')}`;
@@ -77,15 +77,18 @@ const HackedText: React.FC<HackedTextProps> = ({
         runAllAnimations();
       };
       currentTextElement.addEventListener('mouseover', handleMouseOver);
+      
+      // Copy the ref to avoid stale closure
+      const currentIntervalRefs = intervalRefs.current;
+      
       return () => {
         currentTextElement.removeEventListener('mouseover', handleMouseOver);
-        intervalRefs.current.forEach((interval) => {
+        currentIntervalRefs.forEach((interval) => {
           if (interval !== null) clearInterval(interval);
         });
-
       };
     }
-  }, [children]);
+  }, [id, children, runAllAnimations]);
 
   return (
     <Tag

@@ -10,10 +10,10 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
     const videoSrc = `videos/vlhlll.mp4`;
-
     const words = ["Secure", "Modern", "Scalable"];
 
     useGSAP(() => {
+        // Set up all animations in a single context
         const tl = gsap.timeline({
             defaults: {
                 duration: 1,
@@ -21,14 +21,14 @@ const Hero = () => {
             },
         });
 
+        // Initial video frame fade-in
         tl.fromTo(
             "#video-frame",
             { opacity: 0 },
             { opacity: 1, duration: 1.5 }
         );
-    }, []);
 
-    useGSAP(() => {
+        // Content animation with combined fade in/out
         gsap.fromTo(
             "#content",
             { x: -100, opacity: 0 },
@@ -40,60 +40,61 @@ const Hero = () => {
                 scrollTrigger: {
                     trigger: "#content",
                     start: "top 80%",
-                    end: "top 40%",
+                    end: "bottom center",
                     scrub: false,
                     toggleActions: "play none none reverse",
-                },
-                onComplete: () => {
-                    gsap.to("#content", {
-                        opacity: 0,
-                        duration: 1,
-                        scrollTrigger: {
-                            trigger: "#content",
-                            start: "center center",
-                            end: "bottom center ",
-                            scrub: true,
-                        },
-                    });
+                    onUpdate: (self) => {
+                        // Smooth fade-out as user scrolls past center
+                        if (self.progress > 0.7) {
+                            const fadeProgress = (self.progress - 0.7) / 0.3;
+                            gsap.set("#content", { opacity: 1 - fadeProgress });
+                        }
+                    }
                 },
             }
         );
-    }, []);
 
-    useGSAP(() => {
-        const clipAnimation = gsap.timeline({
+        // Optimized video scaling animation
+        gsap.to("#video-frame", {
+            scale: 8,
+            borderRadius: 0,
+            transformOrigin: "75% 25%",
+            ease: "none",
             scrollTrigger: {
                 trigger: "#video-frame",
                 start: "center center",
                 end: "+=600 center",
-                scrub: 0.5,
+                scrub: 0.3, // Reduced scrub value for smoother animation
                 pin: true,
                 pinSpacing: false,
+                anticipatePin: 1, // Helps with pin performance
+                invalidateOnRefresh: true, // Ensures proper recalculation on resize
             }
-        })
+        });
 
-        clipAnimation.to("#video-frame", {
-            scale: 8,
-            borderRadius: 0,
-            transformOrigin: "75% 25%", // Zoom into this point (30% from left, 40% from top)
-        })
-    });
+        // Cleanup function for ScrollTrigger
+        return () => {
+            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+        };
+    }, []);
 
     return (
         <div id="home" className="relative h-dvh w-screen overflow-x-hidden bg-black">
-            <div id="video-frame" className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-black">
-
-                <video src={videoSrc}
+            <div id="video-frame" className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-black will-change-transform">
+                <video 
+                    src={videoSrc}
                     autoPlay
                     loop
                     muted
+                    playsInline
                     className="absolute left-0 top-0 size-full object-cover object-center"
-                ></video>
-                <div id="content" className="absolute top-0 left-0 h-full sm:w-[80vw] md:w-[70vw] lg:w-[40vw] bg-black/40 backdrop-blur-md flex flex-col justify-center pl-16 z-20">
-                    {/* <h1 className="text-left font-bold text-white drop-shadow-lg select-none hero-heading">
-                    Hi, I'm Zariel
-                    <span className="block mb-4 hero-span">A Full stack Software Engineer</span>
-                </h1> */}
+                    style={{ willChange: 'transform' }}
+                />
+                <div 
+                    id="content" 
+                    className="absolute top-0 left-0 h-full sm:w-[80vw] md:w-[70vw] lg:w-[40vw] bg-black/40 backdrop-blur-md flex flex-col justify-center pl-16 z-20"
+                    style={{ willChange: 'transform, opacity' }}
+                >
                     <HackedText className="text-left font-bold text-white drop-shadow-lg select-none hero-heading">
                         Hi, I&apos;m Zariel
                     </HackedText>

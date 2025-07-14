@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import { TfiClose } from 'react-icons/tfi'
 import { TiArrowRight } from 'react-icons/ti';
 import {motion} from 'motion/react'
@@ -57,7 +58,14 @@ const ProjectDetails = ({project, onClose}:ProjectProps) => {
             >
                 <TfiClose className='w-6 h-6' />          
             </button>
-            <img src={project.image} alt={project.title} className='w-full rounded-t-2xl'/>
+            <Image 
+              src={project.image} 
+              alt={project.title} 
+              className='w-full rounded-t-2xl'
+              width={640}
+              height={360}
+              priority
+            />
             <div className='p-5'>
                 <h5 className='mb-2 text-2xl font-bold text-white'>{project.title}</h5>
                 <p className='mb-3 font-normal text-neutral-50'>{project.description}</p>
@@ -67,8 +75,14 @@ const ProjectDetails = ({project, onClose}:ProjectProps) => {
                 <div className='flex items-center justify-between mt-4'>
                     <div className='flex gap-2'>
                         {project.tags.map((tag) => (
-                            <img key={tag.id} src={tag.path} alt={tag.name} 
-                            className='rounded-lg size-10 hover-animation'></img>
+                            <Image 
+                              key={tag.id} 
+                              src={tag.path} 
+                              alt={tag.name} 
+                              className='rounded-lg size-10 hover-animation'
+                              width={40}
+                              height={40}
+                            />
                         ))}
                     </div>
                     <a href={project.href} className='inline-flex items-center gap-1 font-medium hover-animation cursor-pointer' target="_blank">

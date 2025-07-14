@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 const KprFooter = () => {
   return (
@@ -18,7 +19,16 @@ const KprFooter = () => {
           <div className="text-white text-sm font-mono mb-8 tracking-wider">
             SYSTEM_INITIALIZED • STATUS_ACTIVE • READY_FOR_INPUT
           </div>
-          <img src='/img/logo.png' className='w-[70%] h-auto mb-8 mx-auto' alt="Logo" />
+          <div className="relative w-full max-w-2xl mx-auto mb-8">
+            <Image 
+              src="/img/logo.png" 
+              alt="Logo" 
+              width={800}
+              height={400}
+              className="w-[70%] h-auto mx-auto"
+              priority
+            />
+          </div>
           <div className="text-xl md:text-2xl text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed">
             <div className="text-gray-500 mt-2">Portfolio • Development • Creative Direction</div>
           </div>

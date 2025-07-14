@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef, useMemo } from 'react';
 import HackedText from './HackedText';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -8,8 +8,8 @@ export default function ExperienceTimeline() {
   const component = useRef<HTMLDivElement>(null);
   const slider = useRef<HTMLDivElement>(null);
 
-  // --- Experience Data ---
-  const experienceData = [
+  // --- Experience Data - Memoized to prevent unnecessary re-renders ---
+  const experienceData = useMemo(() => [
     {
       id: 1,
       company: 'Thang Long Instrument.',
@@ -23,36 +23,8 @@ export default function ExperienceTimeline() {
       role: 'Software Engineer',
       period: 'Jan 2025 - Jun 2025',
       description: "Design and develop Scientific Project Management System for university's SMIA office",
-    },
-    {
-      id: 3,
-      company: 'Tech Startup LLC',
-      role: 'Junior Developer',
-      period: '2019 - 2020',
-      description: 'Contributed to the development of a new SaaS platform, gaining valuable experience in full-stack development.',
-    },
-    {
-      id: 4,
-      company: 'Web Agency Co.',
-      role: 'Intern',
-      period: 'Summer 2018',
-      description: 'Assisted the development team with various tasks, including website maintenance and content updates.',
-    },
-    {
-      id: 5,
-      company: 'Future Endeavors',
-      role: 'Awaiting Next Challenge',
-      period: 'Future',
-      description: 'Eager to apply my skills to new and exciting projects.',
-    },
-    {
-      id: 6,
-      company: 'Another Great Company',
-      role: 'Senior Software Engineer',
-      period: '2025-2027',
-      description: 'Building amazing things with a talented team.',
-    },
-  ];
+    }
+  ], []);
 
   useLayoutEffect(() => {
     if (!slider.current || !component.current) return;
