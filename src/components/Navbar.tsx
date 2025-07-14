@@ -1,7 +1,8 @@
-import { use, useRef } from "react";
+import { useRef } from "react";
 import { useWindowScroll } from "react-use";
 import { useEffect, useState } from "react";
 import gsap from "gsap";
+import Image from 'next/image';
 
 const navItems = ['Home', 'About', 'Work', 'Contact'];
 
@@ -33,7 +34,7 @@ const Navbar = () => {
             }
         }
         setLastScrollY(scrollY);
-    }, [scrollY])
+    }, [scrollY, lastScrollY])
     
     useEffect(() => {
         gsap.to(navContainerRef.current, {
@@ -52,7 +53,6 @@ const Navbar = () => {
         if (targetElement) {
             const targetPosition = targetElement.offsetTop;
             const startPosition = window.pageYOffset;
-            const distance = targetPosition - startPosition;
             
             // Use GSAP to animate a custom scroll
             gsap.to({ y: startPosition }, {
@@ -71,7 +71,7 @@ const Navbar = () => {
             <header className="absolute top-1/2 w-full -translate-y-1/2">
                 <nav className="flex size-full items-center justify-between p-4">
                     <div className="flex items-center gap-7">
-                        <img src="/img/logo.png" alt="logo" className="w-10"/>
+                        <Image src="/img/logo.png" alt="logo" width={40} height={40} />
                     </div>
                     <div className="flex h-full items-center">
                         <div className="hidden md:block">

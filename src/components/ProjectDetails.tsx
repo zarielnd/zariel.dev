@@ -1,7 +1,7 @@
 import React from 'react'
 import { TfiClose } from 'react-icons/tfi'
 import { TiArrowRight } from 'react-icons/ti';
-import {motion, scale} from 'motion/react'
+import {motion} from 'motion/react'
 
 interface Tag {
   id: number;

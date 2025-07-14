@@ -29,9 +29,9 @@ const Hero = () => {
     }, []);
 
     useGSAP(() => {
-    gsap.fromTo(
-        "#content",
-        { x: -100, opacity: 0 },
+        gsap.fromTo(
+            "#content",
+            { x: -100, opacity: 0 },
             {
                 x: 0,
                 opacity: 1,
@@ -61,16 +61,16 @@ const Hero = () => {
     }, []);
 
     useGSAP(() => {
-    const clipAnimation = gsap.timeline({
-        scrollTrigger: {
-            trigger: "#video-frame",
-            start: "center center",
-            end: "+=600 center",
-            scrub: 0.5,
-            pin: true,
-            pinSpacing: false,
-        }
-    })
+        const clipAnimation = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#video-frame",
+                start: "center center",
+                end: "+=600 center",
+                scrub: 0.5,
+                pin: true,
+                pinSpacing: false,
+            }
+        })
 
         clipAnimation.to("#video-frame", {
             scale: 8,
@@ -79,46 +79,46 @@ const Hero = () => {
         })
     });
 
-  return (
-    <div id="home" className="relative h-dvh w-screen overflow-x-hidden bg-black">
-        <div id="video-frame" className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-black">
+    return (
+        <div id="home" className="relative h-dvh w-screen overflow-x-hidden bg-black">
+            <div id="video-frame" className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-black">
 
-            <video src={videoSrc}
-            autoPlay
-            loop
-            muted
-            className="absolute left-0 top-0 size-full object-cover object-center"
-            ></video>
-            <div id="content" className="absolute top-0 left-0 h-full sm:w-[80vw] md:w-[70vw] lg:w-[40vw] bg-black/40 backdrop-blur-md flex flex-col justify-center pl-16 z-20">
-                {/* <h1 className="text-left font-bold text-white drop-shadow-lg select-none hero-heading">
+                <video src={videoSrc}
+                    autoPlay
+                    loop
+                    muted
+                    className="absolute left-0 top-0 size-full object-cover object-center"
+                ></video>
+                <div id="content" className="absolute top-0 left-0 h-full sm:w-[80vw] md:w-[70vw] lg:w-[40vw] bg-black/40 backdrop-blur-md flex flex-col justify-center pl-16 z-20">
+                    {/* <h1 className="text-left font-bold text-white drop-shadow-lg select-none hero-heading">
                     Hi, I'm Zariel
                     <span className="block mb-4 hero-span">A Full stack Software Engineer</span>
                 </h1> */}
-                <HackedText className="text-left font-bold text-white drop-shadow-lg select-none hero-heading">
-                    Hi, I'm Zariel
-                </HackedText>
-                <HackedText className="block mb-4 hero-span select-none">
-                    A Full stack Software Engineer
-                </HackedText>
-                <HackedText className="block hero-span select-none">
-                    I'm Dedicated To Building
-                </HackedText>
-                <FlipWord words={words} duration={2500} className="text-4xl font-bold text-white flip-word select-none">
-                </FlipWord>
-                <HackedText className="block mb-4 hero-span select-none">
-                    Web Applications
-                </HackedText>
-                <Button
-                id="contact-button"
-                title="contact"
-                leftIcon={<TiLocationArrow/>}
-                scrollTarget="contact"
-                containerClass="bg-white/10 hover:bg-white/20 text-white flex-center gap-1"
-                />
+                    <HackedText className="text-left font-bold text-white drop-shadow-lg select-none hero-heading">
+                        Hi, I&apos;m Zariel
+                    </HackedText>
+                    <HackedText className="block mb-4 hero-span select-none">
+                        A Full stack Software Engineer
+                    </HackedText>
+                    <HackedText className="block hero-span select-none">
+                        I&apos;m Dedicated To Building
+                    </HackedText>
+                    <FlipWord words={words} duration={2500} className="text-4xl font-bold text-white flip-word select-none">
+                    </FlipWord>
+                    <HackedText className="block mb-4 hero-span select-none">
+                        Web Applications
+                    </HackedText>
+                    <Button
+                        id="contact-button"
+                        title="contact"
+                        leftIcon={<TiLocationArrow />}
+                        scrollTarget="contact"
+                        containerClass="bg-white/10 hover:bg-white/20 text-white flex-center gap-1"
+                    />
+                </div>
             </div>
         </div>
-    </div>
-  );
+    );
 }
 
 export default Hero;
