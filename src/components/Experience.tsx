@@ -14,7 +14,7 @@ export default function ExperienceTimeline() {
       id: 1,
       company: 'Thang Long Instrument.',
       role: 'Software Engineer Intern',
-      period: 'Jan 2023 - Jun 2023',
+      period: 'Jan 2024 - Jun 2024',
       description: 'Leading development of a Storage Management System using Spring Boot.',
     },
     {
