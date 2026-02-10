@@ -28,7 +28,7 @@ export default function ExperienceTimeline() {
       id: 3,
       company: 'Skydev',
       role: 'Software Engineer',
-      period: 'Feb 26 - Current',
+      period: 'Feb 2026 - Current',
       description: "Building scalable APIs",
     }
   ], []);
