@@ -13,10 +13,10 @@ import RemoveSplash from './RemoveSplash';
 
 const App = () => {
   
-  SmoothScroll();
   return(
     <>
-        <RemoveSplash/>
+    <SmoothScroll />
+    <RemoveSplash/>
       <KprFooter/>
       <main className='relative min-h-screen w-screen overflow-x-hidden'>
       {/* <SmoothScroll /> */}
