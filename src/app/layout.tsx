@@ -27,6 +27,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <div id="splash" className="splash">
+          <div className="spinner" />
+        </div>
         {children}
       </body>
     </html>

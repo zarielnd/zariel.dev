@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect } from 'react';
 import Lenis from '@studio-freight/lenis';
 
@@ -10,6 +12,8 @@ const SmoothScroll = () => {
       requestAnimationFrame(raf);
     }
     requestAnimationFrame(raf);
+
+    return () => lenis.destroy();
   }, []);
 
   return null;
