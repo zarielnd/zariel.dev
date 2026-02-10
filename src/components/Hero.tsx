@@ -81,7 +81,7 @@ const Hero = () => {
     >
       <div
         id="video-frame"
-        className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-black will-change-transform transform-gpu"
+        className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-black will-change-transform"
       >
         <video
           src={videoSrc}
