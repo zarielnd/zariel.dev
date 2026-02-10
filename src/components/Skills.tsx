@@ -52,10 +52,11 @@ const Skills = () => {
         },
       });
     }
+    ScrollTrigger.refresh();
   }, []); // ✅ Correct placement of closing bracket and dependency array
 
   return (
-    <section className="bg-black pb-52 skills-container">
+    <section className="bg-black min-h-screen pb-52 skills-container">
       {" "}
       {/* Add skills-container class */}
       <div id="title" className="container px-3 md:px-10">

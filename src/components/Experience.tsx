@@ -155,7 +155,7 @@ export default function ExperienceTimeline() {
 
   return (
     <div id="work" className="bg-gray-50">
-      <div className="relative bg-white flex items-center justify-center mt-[80vh]">
+      <div className="relative bg-white flex items-center justify-center 100vh">
         <div className="text-center">
           <div id="hacked-title-container">
             <HackedText

@@ -51,22 +51,22 @@ const Hero = () => {
     );
 
     // Optimized video scaling animation
-    gsap.to("#video-frame", {
-      scale: 8,
-      borderRadius: 0,
-      transformOrigin: "75% 25%",
-      ease: "none",
-      scrollTrigger: {
-        trigger: "#video-frame",
-        start: "center center",
-        end: "+=600 center",
-        scrub: 0.5, // Reduced scrub value for smoother animation
-        pin: true,
-        pinSpacing: false,
-        anticipatePin: 1, // Helps with pin performance
-        invalidateOnRefresh: true, // Ensures proper recalculation on resize
-      },
-    });
+    // gsap.to("#video-frame", {
+    //   scale: 8,
+    //   borderRadius: 0,
+    //   transformOrigin: "75% 25%",
+    //   ease: "none",
+    //   scrollTrigger: {
+    //     trigger: "#video-frame",
+    //     start: "center center",
+    //     end: "+=600 center",
+    //     scrub: 0.5, // Reduced scrub value for smoother animation
+    //     pin: true,
+    //     pinSpacing: false,
+    //     anticipatePin: 1, // Helps with pin performance
+    //     invalidateOnRefresh: true, // Ensures proper recalculation on resize
+    //   },
+    // });
 
     // Cleanup function for ScrollTrigger
     return () => {
