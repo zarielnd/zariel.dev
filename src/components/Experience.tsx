@@ -23,6 +23,13 @@ export default function ExperienceTimeline() {
       role: 'Software Engineer',
       period: 'Jan 2025 - Jun 2025',
       description: "Design and develop Scientific Project Management System for university's SMIA office",
+    },
+    {
+      id: 3,
+      company: 'Skydev',
+      role: 'Software Engineer',
+      period: 'Feb 26 - Current',
+      description: "Building scalable APIs",
     }
   ], []);
 

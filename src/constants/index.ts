@@ -53,5 +53,5 @@ export const myProjects = [
             path: '/logos/sqlserver.svg',
         }
     ]
-}
+},
 ];
