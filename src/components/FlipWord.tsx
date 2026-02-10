@@ -18,40 +18,37 @@ export const FlipWord: React.FC<HackedFlipWordsProps> = ({
   const [displayText, setDisplayText] = useState(words[0]);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  const runHackingAnimation = useCallback(
-    (targetWord: string) => {
-      let iteration = 0;
+  const runHackingAnimation = useCallback((targetWord: string) => {
+    let iteration = 0;
 
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
 
-      intervalRef.current = setInterval(() => {
-        setDisplayText(
-          targetWord
-            .split("")
-            .map((char, index) => {
-              if (index < iteration) {
-                return char;
-              }
-              if (char === " " || char === "\n" || char === "\t") {
-                return char;
-              }
-              return letters[Math.floor(Math.random() * letters.length)];
-            })
-            .join("")
-        );
+    intervalRef.current = setInterval(() => {
+      setDisplayText(
+        targetWord
+          .split("")
+          .map((char, index) => {
+            if (index < iteration) {
+              return char;
+            }
+            if (char === " " || char === "\n" || char === "\t") {
+              return char;
+            }
+            return letters[Math.floor(Math.random() * letters.length)];
+          })
+          .join(""),
+      );
 
-        if (iteration >= targetWord.length) {
-          if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-          }
+      if (iteration >= targetWord.length) {
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
         }
-        iteration += 1 / 3;
-      }, 30);
-    },
-    []
-  );
+      }
+      iteration += 1 / 3;
+    }, 30);
+  }, []);
 
   useEffect(() => {
     runHackingAnimation(words[currentWordIndex]);
@@ -69,15 +66,8 @@ export const FlipWord: React.FC<HackedFlipWordsProps> = ({
   }, [currentWordIndex, words, duration, runHackingAnimation]);
 
   return (
-    <div
-      className={twMerge("inline-block relative text-left", className)}
-    >
-      <span
-        className={twMerge(
-          "whitespace-nowrap",
-          className
-        )}
-      >
+    <div className={twMerge("inline-block relative text-left", className)}>
+      <span className={twMerge("whitespace-nowrap", className)}>
         {displayText}
       </span>
     </div>

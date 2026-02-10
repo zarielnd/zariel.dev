@@ -1,8 +1,7 @@
 import { twMerge } from "tailwind-merge";
 import React from "react";
 
-export interface OrbitingCirclesProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+export interface OrbitingCirclesProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
   children?: React.ReactNode;
   reverse?: boolean;
@@ -57,7 +56,7 @@ export function OrbitingCircles({
             }
             className={twMerge(
               `absolute flex size-[var(--icon-size)] transform-gpu animate-orbit items-center justify-center rounded-full`,
-              reverse && '[animation-direction:reverse]',
+              reverse && "[animation-direction:reverse]",
               className,
             )}
             {...props}

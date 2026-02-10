@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import HackedText from './HackedText'
-import Project from './Project'
-import { myProjects } from '../constants'
-import { motion, useMotionValue, useSpring } from 'motion/react'
+import React, { useState } from "react";
+import HackedText from "./HackedText";
+import Project from "./Project";
+import { myProjects } from "../constants";
+import { motion, useMotionValue, useSpring } from "motion/react";
 
 const Projects = () => {
   const x = useMotionValue(0);
@@ -11,20 +11,21 @@ const Projects = () => {
   const springY = useSpring(y, { damping: 10, stiffness: 50 });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    x.set(e.clientX + 20)
-    y.set(e.clientY + 20)
+    x.set(e.clientX + 20);
+    y.set(e.clientY + 20);
   };
 
   const [preview, setPreview] = useState<string | undefined>(undefined);
 
   return (
-    <section className='relative c-space bg-white'
+    <section
+      className="relative c-space bg-white"
       onMouseMove={handleMouseMove}
     >
-      <HackedText className='text-left font-bold !text-black select-none hero-heading'>
+      <HackedText className="text-left font-bold !text-black select-none hero-heading">
         My Selected Projects
       </HackedText>
-      <div className='bg-gradient-to-r from-transparent via-neutral-950 to-transparent mt-12 h-[1px] w-full' />
+      <div className="bg-gradient-to-r from-transparent via-neutral-950 to-transparent mt-12 h-[1px] w-full" />
       {myProjects.map((project) => (
         <Project key={project.id} project={project} setPreview={setPreview} />
       ))}
@@ -36,9 +37,8 @@ const Projects = () => {
           alt="Preview"
         />
       )}
-
     </section>
-  )
-}
+  );
+};
 
-export default Projects
+export default Projects;

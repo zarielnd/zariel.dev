@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from "react";
 
 const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -14,16 +14,16 @@ const HackedText: React.FC<HackedTextProps> = ({
   id,
   children,
   className,
-  tag: Tag = 'span',
+  tag: Tag = "span",
   playOnLoad = true,
 }) => {
-  const lines = children.split('\n');
+  const lines = children.split("\n");
   const initialLines = useRef<string[]>(lines);
   const intervalRefs = useRef<(NodeJS.Timeout | null)[]>([]);
   const [displayLines, setDisplayLines] = useState<string[]>(lines);
 
   useEffect(() => {
-    initialLines.current = children.split('\n');
+    initialLines.current = children.split("\n");
     setDisplayLines(initialLines.current);
   }, [children]);
 
@@ -70,19 +70,19 @@ const HackedText: React.FC<HackedTextProps> = ({
   }, [playOnLoad, children, runAllAnimations]);
 
   useEffect(() => {
-    const elementId = id ?? `hacked-text-${children.replace(/\s/g, '-')}`;
+    const elementId = id ?? `hacked-text-${children.replace(/\s/g, "-")}`;
     const currentTextElement = document.getElementById(elementId);
     if (currentTextElement) {
       const handleMouseOver = () => {
         runAllAnimations();
       };
-      currentTextElement.addEventListener('mouseover', handleMouseOver);
-      
+      currentTextElement.addEventListener("mouseover", handleMouseOver);
+
       // Copy the ref to avoid stale closure
       const currentIntervalRefs = intervalRefs.current;
-      
+
       return () => {
-        currentTextElement.removeEventListener('mouseover', handleMouseOver);
+        currentTextElement.removeEventListener("mouseover", handleMouseOver);
         currentIntervalRefs.forEach((interval) => {
           if (interval !== null) clearInterval(interval);
         });
@@ -92,15 +92,15 @@ const HackedText: React.FC<HackedTextProps> = ({
 
   return (
     <Tag
-      id={id ?? `hacked-text-${children.replace(/\s/g, '-')}`}
+      id={id ?? `hacked-text-${children.replace(/\s/g, "-")}`}
       className={`
         font-['Space Mono'] text-white text-clamp-3rem-10vw-10rem 
         px-clamp-1rem-2vw-3rem rounded-clamp-0-4rem-0-75vw-1rem 
         transition-all duration-300 whitespace-pre-wrap 
-        ${className || ''}
+        ${className || ""}
       `}
     >
-      {displayLines.join('\n')}
+      {displayLines.join("\n")}
     </Tag>
   );
 };

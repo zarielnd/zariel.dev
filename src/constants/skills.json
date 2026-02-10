@@ -8,7 +8,15 @@
     {
       "id": "languages",
       "title": "Languages",
-      "items": ["HTML", "CSS", "JavaScript", "TypeScript", "Python", "Java", "CSharp"]
+      "items": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "TypeScript",
+        "Python",
+        "Java",
+        "CSharp"
+      ]
     },
     {
       "id": "tools",

@@ -23,14 +23,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <div id="splash" className="splash">
-        <div className="spinner-border"></div>
-      </div>
+          <div className="spinner-border"></div>
+        </div>
         {children}
       </body>
     </html>
