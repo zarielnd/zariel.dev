@@ -7,15 +7,25 @@ const RemoveSplash = () => {
     const splash = document.getElementById("splash");
     if (!splash) return;
 
-    // trigger fade-out
-    splash.classList.add("splash-hide");
+    const hideSplash = () => {
+      // trigger fade-out
+      splash.classList.add("splash-hide");
 
-    // remove from DOM after animation
-    const timeout = setTimeout(() => {
-      splash.remove();
-    }, 500); // must match duration-500
+      // remove from DOM after animation
+      setTimeout(() => {
+        splash.remove();
+      }, 500); // must match duration-500
+    };
 
-    return () => clearTimeout(timeout);
+    // Wait for all assets (images, fonts, scripts, etc.) to load
+    if (document.readyState === "complete") {
+      // Already loaded
+      hideSplash();
+    } else {
+      // Wait for load event
+      window.addEventListener("load", hideSplash);
+      return () => window.removeEventListener("load", hideSplash);
+    }
   }, []);
 
   return null;
