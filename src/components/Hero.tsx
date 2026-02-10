@@ -60,7 +60,7 @@ const Hero = () => {
         trigger: "#video-frame",
         start: "center center",
         end: "+=600 center",
-        scrub: 0.3, // Reduced scrub value for smoother animation
+        scrub: 0.5, // Reduced scrub value for smoother animation
         pin: true,
         pinSpacing: false,
         anticipatePin: 1, // Helps with pin performance
@@ -81,7 +81,7 @@ const Hero = () => {
     >
       <div
         id="video-frame"
-        className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-black will-change-transform"
+        className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-black will-change-transform transform-gpu"
       >
         <video
           src={videoSrc}
