@@ -5,6 +5,7 @@ import FlipWord from "./FlipWord";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
+import { SmartVideo } from "./SmartVideo";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -83,12 +84,8 @@ const Hero = () => {
         id="video-frame"
         className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-black will-change-transform transform-gpu"
       >
-        <video
+        <SmartVideo
           src={videoSrc}
-          autoPlay
-          loop
-          muted
-          playsInline
           className="absolute left-0 top-0 size-full object-cover object-center"
           style={{ willChange: "transform", transform: "translateZ(0)" }}
         />

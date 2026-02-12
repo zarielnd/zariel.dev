@@ -51,7 +51,11 @@ export const FlipWord: React.FC<HackedFlipWordsProps> = ({
   }, []);
 
   useEffect(() => {
-    runHackingAnimation(words[currentWordIndex]);
+    const currentWord = words[currentWordIndex];
+
+    if (!currentWord) return;
+
+    runHackingAnimation(currentWord);
 
     const wordChangeInterval = setInterval(() => {
       setCurrentWordIndex((prevIndex) => (prevIndex + 1) % words.length);
