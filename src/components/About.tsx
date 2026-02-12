@@ -184,23 +184,26 @@ const About = () => {
             <div className="relative size-full">
               <div
                 className="
-                absolute inset-y-0
-                md:inset-y-[50%]
+                absolute
+                top-0
+                bottom-0
+                md:top-[50%]
                 w-full
                 h-full
-                start-[50%]
+                left-[50%]
                 scale-100
-                md:scale-250
-                md:start-[100%]
+                md:scale-[2.5]
+                md:left-[0%]
               "
               >
                 <Frameworks />
               </div>
               <div className="relative z-10 flex size-full flex-col justify-between p-5 text-white pointer-events-none">
                 <div className="select-none">
-                  <h1 className="bento-title ">Skills</h1>
+                  <h1 className="bento-title ">Tech stack</h1>
                   <p className="bento-description">
-                    I'm based in Jupiter, and open to remote work worldwide
+                    I specialize in a diverse range of modern web technologies,
+                    delivering scalable and efficient solutions.
                   </p>
                 </div>
               </div>
@@ -210,9 +213,9 @@ const About = () => {
           <BentoTilt className="bento-tilt_1 col-span-2 row-span-1 ml-32 md:col-span-1 md:ml-0 max-h-[30rem]">
             <div className="relative size-full">
               <figure
-                className="absolute inset-y-0 right-[-25%]
+                className="absolute inset-y-0 right-[-30%]
   flex items-center justify-end
-  md:right-0"
+  md:right-[-20%] md:scale-125"
               >
                 <SmartGlobe></SmartGlobe>
               </figure>
@@ -241,7 +244,7 @@ const About = () => {
               <div className="relative z-10 flex size-full flex-col justify-between p-5 text-white pointer-events-none">
                 <div className="select-none">
                   <h1 className="bento-title ">lorem ipsum</h1>
-                  <p className="mt-3 max-w-64 text-xs md:text-base">
+                  <p className="mt-3 max-w-64 text-xs md:text-base text-str">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     Mauris sed porttitor magna. Mauris vitae leo dui. Proin vel
                     nulla at nisl feugiat interdum
