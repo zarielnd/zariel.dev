@@ -25,7 +25,7 @@ const KprFooter = () => {
           </div>
           <div className="relative w-full max-w-2xl mx-auto mb-8">
             <Image
-              src="/img/logo.png"
+              src="/imgs/logo.png"
               alt="Logo"
               width={800}
               height={400}
