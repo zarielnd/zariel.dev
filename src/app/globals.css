@@ -160,7 +160,7 @@ body {
     @apply absolute left-0 top-0 size-full object-cover object-center;
   }
   .bento-description {
-    @apply mt-3 max-w-96 text-xs md:text-base;
+    @apply mt-3 max-w-64 md:max-w-128 text-xs md:text-base;
   }
 }
 
