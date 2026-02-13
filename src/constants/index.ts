@@ -1,12 +1,15 @@
+import path from "path";
+
 export const myProjects = [
   {
     id: 1,
     title: "Portfolio Website",
-    description: "This is a experimental project and my portfolio website",
+    description:
+      "An experimental portfolio project where I explore creative development, advanced animations, and modern web architecture while continuously refining my frontend engineering skills.",
     subDescription: [
-      "Making animation with GSAP",
-      "Learning Next.js framework",
-      "Designing the website",
+      "Building high-performance animations with GSAP",
+      "Developing scalable applications using Next.js",
+      "Designing responsive and visually polished user interfaces",
     ],
     href: "https://example.com/project-one",
     logo: "https://example.com/logo1.png",
@@ -25,18 +28,29 @@ export const myProjects = [
       {
         id: 3,
         name: "TypeScript",
-        path: "/logos/typescript.svg",
+        path: "/logos/typescript-colored.svg",
+      },
+      {
+        id: 4,
+        name: "GSAP",
+        path: "/logos/gsap-white.svg",
+      },
+      {
+        id: 5,
+        name: "TailwindCSS",
+        path: "/logos/tailwindcss.svg",
       },
     ],
   },
   {
     id: 2,
     title: "Scientific Project Management System",
-    description: "This is a project for my university's SMIA office",
+    description:
+      "A university-level management system developed for the SMIA office to streamline the submission, review, and tracking of scientific research projects. The platform focuses on security, scalability, and efficient workflow management for students, lecturers, and administrators.",
     subDescription: [
-      "Making security and scalable web application",
-      "Applying .NET Framework",
-      "Designing the website",
+      "Developing a secure and scalable web application architecture",
+      "Implementing backend services using .NET Framework",
+      "Designing structured database systems with SQL Server",
     ],
     href: "https://science.fpt.edu.vn/",
     logo: "https://example.com/logo1.png",
@@ -45,12 +59,17 @@ export const myProjects = [
       {
         id: 1,
         name: ".NET",
-        path: "/logos/dotnet.svg",
+        path: "/logos/dotnet-colored.svg",
       },
       {
         id: 2,
         name: "SQL Server",
         path: "/logos/sqlserver.svg",
+      },
+      {
+        id: 3,
+        name: "Azure",
+        path: "/logos/azure.svg",
       },
     ],
   },

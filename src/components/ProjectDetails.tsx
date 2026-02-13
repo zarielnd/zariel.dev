@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { TfiClose } from "react-icons/tfi";
-import { TiArrowRight } from "react-icons/ti";
+import { TiAdjustBrightness, TiArrowRight, TiStar } from "react-icons/ti";
 import { motion } from "motion/react";
 
 interface Tag {
@@ -75,7 +75,10 @@ const ProjectDetails = ({ project, onClose }: ProjectProps) => {
             {project.description}
           </p>
           {project.subDescription.map((subDesc, index) => (
-            <p key={index}>{subDesc}</p>
+            <p key={index} className="flex items-center gap-2">
+              <TiStar className="shrink-0" />
+              <span>{subDesc}</span>
+            </p>
           ))}
           <div className="flex items-center justify-between mt-4">
             <div className="flex gap-2">
@@ -90,13 +93,15 @@ const ProjectDetails = ({ project, onClose }: ProjectProps) => {
                 />
               ))}
             </div>
-            <a
-              href={project.href}
-              className="inline-flex items-center gap-1 font-medium hover-animation cursor-pointer"
-              target="_blank"
-            >
-              View Project <TiArrowRight />
-            </a>
+            <div className="bg-white rounded-4xl p-3 font-medium hover-animation cursor-pointer text-black">
+              <a
+                href={project.href}
+                className="inline-flex items-center gap-1"
+                target="_blank"
+              >
+                View Project <TiArrowRight />
+              </a>
+            </div>
           </div>
         </div>
       </motion.div>
