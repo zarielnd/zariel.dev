@@ -83,6 +83,7 @@ const About = () => {
 
   return (
     <section
+      id="about"
       ref={sectionRef}
       className="pb-52 bg-black will-change[background-color];"
     >
