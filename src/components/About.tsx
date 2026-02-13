@@ -15,44 +15,69 @@ interface BentoTiltProps {
   children: React.ReactNode;
   className?: string;
 }
-
 export const BentoTilt: React.FC<BentoTiltProps> = ({
   children,
   className = "",
 }) => {
-  const [transformStyle] = useState<string>("");
   const itemRef = useRef<HTMLDivElement | null>(null);
+  const isDragging = useRef(false);
+  const boundsRef = useRef<DOMRect | null>(null);
 
-  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!itemRef.current) return;
 
-    const { left, top, width, height } =
-      itemRef.current.getBoundingClientRect();
+    isDragging.current = true;
+    boundsRef.current = itemRef.current.getBoundingClientRect();
 
-    const relativeX = (event.clientX - left) / width;
-    const relativeY = (event.clientY - top) / height;
-
-    const tiltX = (relativeY - 0.5) * 5;
-    const tiltY = (relativeX - 0.5) * -5;
-
-    itemRef.current.style.transform = `perspective(700px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(.95,.95,.95)`;
+    // Improves drag tracking
+    itemRef.current.setPointerCapture(e.pointerId);
   };
 
-  const handleMouseLeave = () => {
-    const el = itemRef.current;
-    if (!el) return;
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!itemRef.current || !isDragging.current || !boundsRef.current) return;
 
-    // Smooth reset
-    el.style.transform = `perspective(800px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+    const { left, top, width, height } = boundsRef.current;
+
+    const relativeX = (e.clientX - left) / width;
+    const relativeY = (e.clientY - top) / height;
+
+    const tiltX = (relativeY - 0.5) * 6;
+    const tiltY = (relativeX - 0.5) * -6;
+
+    itemRef.current.style.transform = `
+      perspective(700px)
+      rotateX(${tiltX}deg)
+      rotateY(${tiltY}deg)
+      scale3d(.96,.96,.96)
+    `;
+  };
+
+  const resetTilt = (e?: React.PointerEvent<HTMLDivElement>) => {
+    if (!itemRef.current) return;
+
+    isDragging.current = false;
+    boundsRef.current = null;
+
+    if (e) {
+      itemRef.current.releasePointerCapture(e.pointerId);
+    }
+
+    itemRef.current.style.transform = `
+      perspective(800px)
+      rotateX(0deg)
+      rotateY(0deg)
+      scale3d(1,1,1)
+    `;
   };
 
   return (
     <div
       ref={itemRef}
-      className={className}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ transform: transformStyle }}
+      className={`${className} transition-transform duration-300 ease-out`}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={resetTilt}
+      onPointerCancel={resetTilt}
     >
       {children}
     </div>
