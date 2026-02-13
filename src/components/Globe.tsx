@@ -75,12 +75,11 @@ export function Globe({
   paused?: boolean;
 }) {
   let phi = 0;
-  let width = 0;
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pointerInteracting = useRef<number | null>(null);
   const pointerInteractionMovement = useRef(0);
-  const globeRef = useRef<any>(null);
+  const globeRef = useRef<ReturnType<typeof createGlobe> | null>(null);
   const isVisible = useRef(true);
   const lastFrameTime = useRef(0);
   const widthRef = useRef(0);
@@ -129,7 +128,6 @@ export function Globe({
   const onResize = useCallback(() => {
     if (canvasRef.current) {
       widthRef.current = canvasRef.current.offsetWidth;
-      width = widthRef.current;
     }
   }, []);
 

@@ -91,7 +91,7 @@ const HackedText: React.FC<HackedTextProps> = ({
         });
       };
     }
-  }, [id, children, runAllAnimations]);
+  }, [id, children, runAllAnimations, hoverAnimation]);
 
   return (
     <Tag

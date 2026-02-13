@@ -2,14 +2,11 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HackedText from "./HackedText";
-import { TiLocationArrow } from "react-icons/ti";
-import { Globe } from "./Globe";
 import Image from "next/image";
 import { SmartVideo } from "./SmartVideo";
 // import BentoCard from "./BentoCard";
 import { useRef, useState } from "react";
 import { SmartGlobe } from "./SmartGlobe";
-import { OrbitingCircles } from "./OrbitingCircles";
 import { Frameworks } from "./Frameworks";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -23,7 +20,7 @@ export const BentoTilt: React.FC<BentoTiltProps> = ({
   children,
   className = "",
 }) => {
-  const [transformStyle, setTransformStyle] = useState<string>("");
+  const [transformStyle] = useState<string>("");
   const itemRef = useRef<HTMLDivElement | null>(null);
 
   const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -109,10 +106,11 @@ const About = () => {
             ></SmartVideo>
             <div className="relative z-10 flex size-full flex-col justify-between p-5 text-white">
               <div className="select-none">
-                <h1 className="bento-title ">Bonjour, I'm Zariel</h1>
+                <h1 className="bento-title ">Bonjour, I&apos;m Zariel</h1>
                 <p className="bento-description">
-                  Over the past two years, I've built solid frontend and backend
-                  foundations to ship dynamic software and web applications.
+                  Over the past two years, I&apos;ve built solid frontend and
+                  backend foundations to ship dynamic software and web
+                  applications.
                 </p>
               </div>
             </div>
@@ -152,7 +150,7 @@ const About = () => {
                 <div className="select-none">
                   <h1 className="bento-title ">Time Zone</h1>
                   <p className="mt-3 max-w-64 text-xs md:text-base">
-                    I'm based in Jupiter, and open to remote work worldwide
+                    I&apos;m based in Jupiter, and open to remote work worldwide
                   </p>
                 </div>
               </div>
@@ -186,7 +184,7 @@ const About = () => {
           <BentoTilt className="bento-tilt_2 max-h-[30rem]">
             <div className="flex size-full flex-col justify-between bg-white p-5">
               <h1 className="bento-title special-font text-black">
-                "Know how to learn. Then, want to learn."
+                &quot;Know how to learn. Then, want to learn.&quot;
               </h1>
               <p className="m-5 self-end text-black">- Katherine Johnson</p>
             </div>

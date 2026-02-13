@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { TfiClose } from "react-icons/tfi";
-import { TiAdjustBrightness, TiArrowRight, TiStar } from "react-icons/ti";
+import { TiArrowRight, TiStar } from "react-icons/ti";
 import { motion } from "motion/react";
 
 interface Tag {

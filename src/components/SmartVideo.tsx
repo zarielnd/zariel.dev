@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react";
 
-interface SmartVideoProps extends React.VideoHTMLAttributes<HTMLVideoElement> {}
+interface SmartVideoProps extends React.VideoHTMLAttributes<HTMLVideoElement> {
+  src: string;
+}
 
 export const SmartVideo: React.FC<SmartVideoProps> = ({ ...props }) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
