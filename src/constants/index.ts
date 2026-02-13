@@ -10,7 +10,7 @@ export const myProjects = [
     ],
     href: "https://example.com/project-one",
     logo: "https://example.com/logo1.png",
-    image: "/img/portfolio.png",
+    image: "/imgs/portfolio.png",
     tags: [
       {
         id: 1,
@@ -40,7 +40,7 @@ export const myProjects = [
     ],
     href: "https://science.fpt.edu.vn/",
     logo: "https://example.com/logo1.png",
-    image: "/img/fpt.png",
+    image: "/imgs/fpt.png",
     tags: [
       {
         id: 1,

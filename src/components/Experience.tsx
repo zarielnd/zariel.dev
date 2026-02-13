@@ -161,6 +161,7 @@ export default function ExperienceTimeline() {
             <HackedText
               className="hero-heading font-bold !text-black drop-shadow-lg select-none"
               playOnLoad={false}
+              hoverAnimation={true}
             >
               My Professional Journey
             </HackedText>

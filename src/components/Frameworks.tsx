@@ -43,9 +43,10 @@ const Icon = ({ src }: IconProps) => {
     <Image
       src={src}
       alt={`Icon ${src}`}
-      className="duration-200 rounded-sm hover:scale-110 brightness-0 invert"
+      className="duration-200 rounded-sm hover:scale-110 brightness-0 invert object-contain will-change-transform"
       fill
       priority
+      unoptimized
     />
   );
 };

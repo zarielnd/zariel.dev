@@ -8,6 +8,7 @@ interface HackedTextProps {
   className?: string;
   tag?: keyof React.JSX.IntrinsicElements;
   playOnLoad?: boolean;
+  hoverAnimation?: boolean;
 }
 
 const HackedText: React.FC<HackedTextProps> = ({
@@ -16,6 +17,7 @@ const HackedText: React.FC<HackedTextProps> = ({
   className,
   tag: Tag = "span",
   playOnLoad = true,
+  hoverAnimation = false,
 }) => {
   const lines = children.split("\n");
   const initialLines = useRef<string[]>(lines);
@@ -34,7 +36,7 @@ const HackedText: React.FC<HackedTextProps> = ({
     if (intervalRefs.current[lineIndex]) {
       clearInterval(intervalRefs.current[lineIndex]!);
     }
-
+    if (!targetText) return;
     intervalRefs.current[lineIndex] = setInterval(() => {
       setDisplayLines((prevLines) => {
         const newLines = [...prevLines];
@@ -70,6 +72,7 @@ const HackedText: React.FC<HackedTextProps> = ({
   }, [playOnLoad, children, runAllAnimations]);
 
   useEffect(() => {
+    if (!hoverAnimation) return;
     const elementId = id ?? `hacked-text-${children.replace(/\s/g, "-")}`;
     const currentTextElement = document.getElementById(elementId);
     if (currentTextElement) {
