@@ -14,7 +14,8 @@ const getOptimalDPR = (): number => {
   const hardwareConcurrency = navigator.hardwareConcurrency || 4;
 
   // Lower DPR for devices with fewer cores
-  if (hardwareConcurrency < 4) return Math.min(dpr, 1);
+  if (hardwareConcurrency <= 4) return 1;
+  if (hardwareConcurrency <= 8) return Math.min(dpr, 1.25);
   return Math.min(dpr, 1.5);
 };
 
@@ -203,10 +204,11 @@ export function Globe({
         if (!pointerInteracting.current) {
           phiRef.current += 0.01;
         }
+        const size = Math.min(widthRef.current, 600);
 
+        state.width = size;
+        state.height = size;
         state.phi = phiRef.current + rs.get();
-        state.width = widthRef.current;
-        state.height = widthRef.current;
       },
     });
 

@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import HackedText from "./HackedText";
+import HackedText, { HackedTextHandle } from "./HackedText";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -8,6 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Footer = () => {
   const footerRef = useRef(null);
+  const hackedRef = useRef<HackedTextHandle>(null);
 
   useGSAP(() => {
     const triggerElement = document.querySelector("#footer-hacked-container");
@@ -36,12 +37,7 @@ const Footer = () => {
         trigger: triggerElement,
         start: "top 80%",
         onEnter: () => {
-          const hackedTextEl = document.querySelector("#footer-hacked-text");
-          if (hackedTextEl) {
-            hackedTextEl.dispatchEvent(
-              new Event("mouseover", { bubbles: true }),
-            );
-          }
+          hackedRef.current?.play();
         },
       });
     }
@@ -57,9 +53,11 @@ const Footer = () => {
           {/* Column 1 - System Info */}
           <div className="space-y-4">
             <HackedText
+              ref={hackedRef}
               id="footer-hacked-text"
               className="!text-gray-400 text-xs select-none font-mono space-y-2"
               playOnLoad={true}
+              hoverAnimation={true}
             >
               {`// INITIALIZING 
 NEW FILES IN DATABASE
@@ -106,13 +104,6 @@ ACTIVATE CONSOLE FOR ACCESS...`}
               ■ SOCIAL MEDIAS
             </div>
             <div className="space-y-3">
-              <a
-                href="https://www.facebook.com/ndpn8/"
-                target="_blank"
-                className="block text-white hover:text-gray-300 transition-colors font-medium"
-              >
-                FACEBOOK
-              </a>
               <a
                 href="https://www.linkedin.com/in/zarielnd/"
                 target="_blank"

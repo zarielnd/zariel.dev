@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useRef, useMemo } from "react";
-import HackedText from "./HackedText";
+import HackedText, { HackedTextHandle } from "./HackedText";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
@@ -37,6 +37,7 @@ export default function ExperienceTimeline() {
     ],
     [],
   );
+  const hackedRef = useRef<HackedTextHandle>(null);
 
   useLayoutEffect(() => {
     if (!slider.current || !component.current) return;
@@ -119,16 +120,7 @@ export default function ExperienceTimeline() {
           trigger: titleElement,
           start: "top 85%",
           onEnter: () => {
-            setTimeout(() => {
-              const hackedTextElement = document.querySelector(
-                "#hacked-text-My-Professional-Journey",
-              );
-              if (hackedTextElement) {
-                hackedTextElement.dispatchEvent(
-                  new Event("mouseover", { bubbles: true }),
-                );
-              }
-            }, 300);
+            hackedRef.current?.play();
           },
         });
       }
@@ -159,9 +151,9 @@ export default function ExperienceTimeline() {
         <div className="text-center">
           <div id="hacked-title-container">
             <HackedText
+              ref={hackedRef}
               className="hero-heading font-bold !text-black drop-shadow-lg select-none"
-              playOnLoad={false}
-              hoverAnimation={true}
+              playOnLoad={true}
             >
               My Professional Journey
             </HackedText>

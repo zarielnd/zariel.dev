@@ -5,7 +5,7 @@ import HackedText from "./HackedText";
 import Image from "next/image";
 import { SmartVideo } from "./SmartVideo";
 // import BentoCard from "./BentoCard";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { SmartGlobe } from "./SmartGlobe";
 import { Frameworks } from "./Frameworks";
 
@@ -23,23 +23,13 @@ export const BentoTilt: React.FC<BentoTiltProps> = ({
   const isDragging = useRef(false);
   const boundsRef = useRef<DOMRect | null>(null);
 
-  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!itemRef.current) return;
-
-    isDragging.current = true;
-    boundsRef.current = itemRef.current.getBoundingClientRect();
-
-    // Improves drag tracking
-    itemRef.current.setPointerCapture(e.pointerId);
-  };
-
-  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!itemRef.current || !isDragging.current || !boundsRef.current) return;
+  const calculateTilt = (clientX: number, clientY: number) => {
+    if (!itemRef.current || !boundsRef.current) return;
 
     const { left, top, width, height } = boundsRef.current;
 
-    const relativeX = (e.clientX - left) / width;
-    const relativeY = (e.clientY - top) / height;
+    const relativeX = (clientX - left) / width;
+    const relativeY = (clientY - top) / height;
 
     const tiltX = (relativeY - 0.5) * 6;
     const tiltY = (relativeX - 0.5) * -6;
@@ -52,13 +42,42 @@ export const BentoTilt: React.FC<BentoTiltProps> = ({
     `;
   };
 
+  const handlePointerEnter = () => {
+    if (!itemRef.current) return;
+    boundsRef.current = itemRef.current.getBoundingClientRect();
+  };
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!itemRef.current) return;
+
+    // Desktop hover behavior
+    if (e.pointerType === "mouse") {
+      calculateTilt(e.clientX, e.clientY);
+    }
+
+    // Mobile drag behavior
+    if (e.pointerType === "touch" && isDragging.current) {
+      calculateTilt(e.clientX, e.clientY);
+    }
+  };
+
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== "touch") return;
+
+    if (!itemRef.current) return;
+
+    isDragging.current = true;
+    boundsRef.current = itemRef.current.getBoundingClientRect();
+    itemRef.current.setPointerCapture(e.pointerId);
+  };
+
   const resetTilt = (e?: React.PointerEvent<HTMLDivElement>) => {
     if (!itemRef.current) return;
 
     isDragging.current = false;
     boundsRef.current = null;
 
-    if (e) {
+    if (e && itemRef.current.hasPointerCapture(e.pointerId)) {
       itemRef.current.releasePointerCapture(e.pointerId);
     }
 
@@ -74,8 +93,10 @@ export const BentoTilt: React.FC<BentoTiltProps> = ({
     <div
       ref={itemRef}
       className={`${className} transition-transform duration-300 ease-out`}
-      onPointerDown={handlePointerDown}
+      onPointerEnter={handlePointerEnter}
       onPointerMove={handlePointerMove}
+      onPointerLeave={resetTilt}
+      onPointerDown={handlePointerDown}
       onPointerUp={resetTilt}
       onPointerCancel={resetTilt}
     >

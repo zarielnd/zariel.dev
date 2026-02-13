@@ -4,20 +4,8 @@ import Image from "next/image";
 const KprFooter = () => {
   return (
     // This footer is fixed to the viewport and sits in the background (z-0)
-    <footer className="kpr-footer fixed top-0 left-0 w-full h-screen z-0">
+    <footer className="fixed top-0 left-0 w-full h-screen z-0 bg-black">
       <div className="flex items-center justify-center h-full relative overflow-hidden">
-        {/* Subtle grid pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)",
-              backgroundSize: "50px 50px",
-            }}
-          ></div>
-        </div>
-
         {/* Main KPR Banner Content */}
         <div className="text-center z-10 max-w-4xl mx-auto px-6">
           <div className="text-white text-sm font-mono mb-8 tracking-wider">
@@ -38,8 +26,8 @@ const KprFooter = () => {
               Portfolio • Development • Creative Direction
             </div>
           </div>
-          <div className="bg-gray-900 border border-gray-700 rounded-lg p-6 max-w-md mx-auto mb-12 text-left">
-            <div className="text-green-400 text-sm font-mono mb-2">
+          <div className="bg-black border border-gray-700 rounded-lg p-6 max-w-md mx-auto mb-12 text-left">
+            <div className="text-white text-sm font-mono font-bold mb-2">
               $ portfolio --status
             </div>
             <div className="text-gray-400 text-sm font-mono">
@@ -47,7 +35,7 @@ const KprFooter = () => {
               <br />
               Initializing contact protocols...
               <br />
-              <span className="text-green-400">Ready for collaboration</span>
+              <span className="text-white">Ready for collaboration</span>
             </div>
           </div>
           <div className="space-y-4 text-gray-400 text-sm font-mono">

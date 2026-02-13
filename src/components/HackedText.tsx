@@ -1,8 +1,19 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 
-const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-interface HackedTextProps {
+export interface HackedTextHandle {
+  play: () => void;
+}
+
+export interface HackedTextProps {
   id?: string;
   children: string;
   className?: string;
@@ -11,101 +22,100 @@ interface HackedTextProps {
   hoverAnimation?: boolean;
 }
 
-const HackedText: React.FC<HackedTextProps> = ({
-  id,
-  children,
-  className,
-  tag: Tag = "span",
-  playOnLoad = true,
-  hoverAnimation = false,
-}) => {
-  const lines = children.split("\n");
-  const initialLines = useRef<string[]>(lines);
-  const intervalRefs = useRef<(NodeJS.Timeout | null)[]>([]);
-  const [displayLines, setDisplayLines] = useState<string[]>(lines);
+const HackedText = forwardRef<HackedTextHandle, HackedTextProps>(
+  (
+    {
+      id,
+      children,
+      className,
+      tag: Tag = "span",
+      playOnLoad = true,
+      hoverAnimation = false,
+    },
+    ref,
+  ) => {
+    const initialLines = useRef<string[]>(children.split("\n"));
+    const intervalRefs = useRef<(number | null)[]>([]);
+    const [displayLines, setDisplayLines] = useState<string[]>(
+      children.split("\n"),
+    );
 
-  useEffect(() => {
-    initialLines.current = children.split("\n");
-    setDisplayLines(initialLines.current);
-  }, [children]);
+    useEffect(() => {
+      const newLines = children.split("\n");
+      initialLines.current = newLines;
+      setDisplayLines(newLines);
+    }, [children]);
 
-  const runLineAnimation = useCallback((lineIndex: number) => {
-    let iteration = 0;
-    const targetText = initialLines.current[lineIndex];
+    const runLineAnimation = useCallback((lineIndex: number) => {
+      let iteration = 0;
+      const targetText = initialLines.current[lineIndex];
+      if (!targetText) return;
 
-    if (intervalRefs.current[lineIndex]) {
-      clearInterval(intervalRefs.current[lineIndex]!);
-    }
-    if (!targetText) return;
-    intervalRefs.current[lineIndex] = setInterval(() => {
-      setDisplayLines((prevLines) => {
-        const newLines = [...prevLines];
-        newLines[lineIndex] = targetText
-          .split("")
-          .map((char, index) => {
-            if (index < iteration) return char;
-            if (char === " " || char === "\n" || char === "\t") return char;
-            return letters[Math.floor(Math.random() * letters.length)];
-          })
-          .join("");
-        return newLines;
-      });
-
-      iteration += 1 / 3;
-      if (iteration >= targetText.length) {
+      if (intervalRefs.current[lineIndex] !== null) {
         clearInterval(intervalRefs.current[lineIndex]!);
       }
-    }, 30);
-  }, []);
 
-  const runAllAnimations = useCallback(() => {
-    initialLines.current.forEach((_, idx) => runLineAnimation(idx));
-  }, [runLineAnimation]);
+      intervalRefs.current[lineIndex] = window.setInterval(() => {
+        setDisplayLines((prev) => {
+          const newLines = [...prev];
 
-  useEffect(() => {
-    if (playOnLoad) {
-      const timeout = setTimeout(() => {
-        runAllAnimations();
-      }, 100);
-      return () => clearTimeout(timeout);
-    }
-  }, [playOnLoad, children, runAllAnimations]);
+          newLines[lineIndex] = targetText
+            .split("")
+            .map((char, index) => {
+              if (index < iteration) return char;
+              if (char === " " || char === "\n" || char === "\t") return char;
+              return LETTERS[Math.floor(Math.random() * LETTERS.length)];
+            })
+            .join("");
 
-  useEffect(() => {
-    if (!hoverAnimation) return;
-    const elementId = id ?? `hacked-text-${children.replace(/\s/g, "-")}`;
-    const currentTextElement = document.getElementById(elementId);
-    if (currentTextElement) {
-      const handleMouseOver = () => {
-        runAllAnimations();
-      };
-      currentTextElement.addEventListener("mouseover", handleMouseOver);
+          return newLines;
+        });
 
-      // Copy the ref to avoid stale closure
-      const currentIntervalRefs = intervalRefs.current;
+        iteration += 1 / 3;
+
+        if (iteration >= targetText.length) {
+          clearInterval(intervalRefs.current[lineIndex]!);
+        }
+      }, 30);
+    }, []);
+
+    const runAllAnimations = useCallback(() => {
+      initialLines.current.forEach((_, idx) => runLineAnimation(idx));
+    }, [runLineAnimation]);
+
+    // expose to parent (GSAP scroll)
+    useImperativeHandle(ref, () => ({
+      play: runAllAnimations,
+    }));
+
+    // play on mount
+    useEffect(() => {
+      if (!playOnLoad) return;
+      runAllAnimations();
+    }, [playOnLoad, runAllAnimations]);
+
+    // cleanup
+    useEffect(() => {
+      const intervals = intervalRefs.current;
 
       return () => {
-        currentTextElement.removeEventListener("mouseover", handleMouseOver);
-        currentIntervalRefs.forEach((interval) => {
+        intervals.forEach((interval) => {
           if (interval !== null) clearInterval(interval);
         });
       };
-    }
-  }, [id, children, runAllAnimations, hoverAnimation]);
+    }, []);
 
-  return (
-    <Tag
-      id={id ?? `hacked-text-${children.replace(/\s/g, "-")}`}
-      className={`
-        font-['Space Mono'] text-white text-clamp-3rem-10vw-10rem 
-        px-clamp-1rem-2vw-3rem rounded-clamp-0-4rem-0-75vw-1rem 
-        transition-all duration-300 whitespace-pre-wrap 
-        ${className || ""}
-      `}
-    >
-      {displayLines.join("\n")}
-    </Tag>
-  );
-};
+    return (
+      <Tag
+        id={id}
+        onMouseEnter={hoverAnimation ? runAllAnimations : undefined}
+        className={`whitespace-pre-wrap ${className ?? ""}`}
+      >
+        {displayLines.join("\n")}
+      </Tag>
+    );
+  },
+);
 
+HackedText.displayName = "HackedText";
 export default HackedText;
