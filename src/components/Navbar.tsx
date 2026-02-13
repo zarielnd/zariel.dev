@@ -80,7 +80,7 @@ const Navbar = () => {
       <header className="absolute top-1/2 w-full -translate-y-1/2">
         <nav className="flex size-full items-center justify-between p-4">
           <div className="flex items-center gap-7">
-            <Image src="/img/logo.png" alt="logo" width={40} height={40} />
+            <Image src="/imgs/logo.png" alt="logo" width={40} height={40} />
           </div>
           <div className="flex h-full items-center">
             <div className="hidden md:block">
