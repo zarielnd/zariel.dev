@@ -74,7 +74,7 @@ export function Globe({
   config?: COBEOptions;
   paused?: boolean;
 }) {
-  let phi = 0;
+  const phiRef = useRef(0);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pointerInteracting = useRef<number | null>(null);
@@ -201,10 +201,10 @@ export function Globe({
 
         // Update rotation
         if (!pointerInteracting.current) {
-          phi += 0.01;
+          phiRef.current += 0.01;
         }
 
-        state.phi = phi + rs.get();
+        state.phi = phiRef.current + rs.get();
         state.width = widthRef.current;
         state.height = widthRef.current;
       },
