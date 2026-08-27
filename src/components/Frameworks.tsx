@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { OrbitingCircles } from "./OrbitingCircles";
 
-export function Frameworks() {
+export function Frameworks({ paused = false }: { paused?: boolean }) {
   const skills = [
     "typescript",
-    "javascript",
+    "temporal",
     "react",
     "nextjs",
     "tailwindcss",
@@ -14,20 +14,26 @@ export function Frameworks() {
     "java",
     "postgresql",
     "docker",
-    "git",
+    "go",
     "github",
   ];
   return (
     <div className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden">
-      <OrbitingCircles iconSize={40}>
+      <OrbitingCircles iconSize={40} paused={paused}>
         {skills.map((skill, index) => (
-          <Icon key={index} src={`logos/${skill}.svg`}></Icon>
+          <Icon key={index} src={`logos/${skill}.svg`} />
         ))}
       </OrbitingCircles>
 
-      <OrbitingCircles iconSize={30} radius={100} reverse speed={1}>
+      <OrbitingCircles
+        iconSize={30}
+        radius={100}
+        reverse
+        speed={1}
+        paused={paused}
+      >
         {[...skills].reverse().map((skill, index) => (
-          <Icon key={index} src={`logos/${skill}.svg`}></Icon>
+          <Icon key={index} src={`logos/${skill}.svg`} />
         ))}
       </OrbitingCircles>
     </div>

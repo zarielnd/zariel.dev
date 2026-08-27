@@ -164,16 +164,13 @@ export function Globe({
     return () => observer.disconnect();
   }, []);
 
+  const pausedRef = useRef(paused);
+  useEffect(() => {
+    pausedRef.current = paused;
+  }, [paused]);
+
   // Main globe initialization effect
   useEffect(() => {
-    if (paused) {
-      if (globeRef.current) {
-        globeRef.current.destroy();
-        globeRef.current = null;
-      }
-      return;
-    }
-
     let resizeTimeoutId: NodeJS.Timeout;
     const debouncedResize = () => {
       clearTimeout(resizeTimeoutId);
@@ -188,24 +185,17 @@ export function Globe({
       width: widthRef.current,
       height: widthRef.current,
       onRender: (state) => {
-        // Skip rendering if not visible or paused
-        if (!isVisible.current || paused) return;
+        if (!isVisible.current || pausedRef.current) return;
 
         const now = performance.now();
         const elapsed = now - lastFrameTime.current;
-
-        // Frame rate limiting
         if (elapsed < frameInterval) return;
-
-        // Adjust for drift
         lastFrameTime.current = now - (elapsed % frameInterval);
 
-        // Update rotation
         if (!pointerInteracting.current) {
           phiRef.current += 0.01;
         }
         const size = Math.min(widthRef.current, 600);
-
         state.width = size;
         state.height = size;
         state.phi = phiRef.current + rs.get();
@@ -214,7 +204,6 @@ export function Globe({
 
     globeRef.current = globe;
 
-    // Fade in effect
     setTimeout(() => {
       if (canvasRef.current) {
         canvasRef.current.style.opacity = "1";
@@ -227,7 +216,7 @@ export function Globe({
       globeRef.current = null;
       window.removeEventListener("resize", debouncedResize);
     };
-  }, [paused, rs, memoizedConfig, onResize, frameInterval]);
+  }, [rs, memoizedConfig, onResize, frameInterval]);
 
   return (
     <div

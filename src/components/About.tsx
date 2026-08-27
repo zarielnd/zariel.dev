@@ -7,7 +7,7 @@ import { SmartVideo } from "./SmartVideo";
 // import BentoCard from "./BentoCard";
 import { useRef } from "react";
 import { SmartGlobe } from "./SmartGlobe";
-import { Frameworks } from "./Frameworks";
+import { SmartFrameworks } from "./SmartFrameworks";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -108,6 +108,7 @@ export const BentoTilt: React.FC<BentoTiltProps> = ({
 const About = () => {
   const sectionRef = useRef<HTMLElement | null>(null);
   const gridRef = useRef<HTMLDivElement | null>(null);
+  const card2Ref = useRef<HTMLDivElement | null>(null);
 
   useGSAP(() => {
     if (!sectionRef.current || !gridRef.current) return;
@@ -171,9 +172,9 @@ const About = () => {
         >
           {/*Card2*/}
           <BentoTilt className="bento-tilt_1 col-span-2 row-span-1 md:col-span-1 md:row-span-2 max-h-[70rem]">
-            <div className="relative size-full">
+            <div className="relative size-full" ref={card2Ref}>
               <div className=" absolute top-0 bottom-0 md:top-[50%] w-full h-full left-[50%] scale-100 md:scale-[2.5] md:left-[0%] transform-gpu will-change-transform ">
-                <Frameworks />
+                <SmartFrameworks observeRef={card2Ref} />
               </div>
               <div className="relative z-10 flex size-full flex-col justify-between p-5 text-white pointer-events-none">
                 <div className="select-none">
@@ -212,15 +213,15 @@ const About = () => {
                 alt={"Feature 2"}
                 className="bento-media"
                 fill
+                sizes=""
                 priority
               ></Image>
               <div className="relative z-10 flex size-full flex-col justify-between p-5 text-white pointer-events-none">
                 <div className="select-none">
-                  <h1 className="bento-title ">lorem ipsum</h1>
+                  <h1 className="bento-title ">CURRENTLY</h1>
                   <p className="mt-3 max-w-64 text-xs md:text-base text-str">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Mauris sed porttitor magna. Mauris vitae leo dui. Proin vel
-                    nulla at nisl feugiat interdum
+                    Deep in Go and Temporal at the moment; durable workflows are
+                    the new obsession.
                   </p>
                 </div>
               </div>

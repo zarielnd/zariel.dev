@@ -17,7 +17,7 @@ export default function ExperienceTimeline() {
         role: "Software Engineer Intern",
         period: "Jan 2024 - Jun 2024",
         description:
-          "Leading development of a Storage Management System using Spring Boot.",
+          "Independently designed and built a Storage Management System with **Spring Boot** in a 2-person intern team",
       },
       {
         id: 2,
@@ -25,14 +25,23 @@ export default function ExperienceTimeline() {
         role: "Software Engineer",
         period: "Jan 2025 - Jun 2025",
         description:
-          "Design and develop Scientific Project Management System for university's SMIA office",
+          "Designed and built a request-change approval workflow for a Scientific Project Management System using **.NET**, FPT University's SMIA office",
       },
       {
         id: 3,
         company: "Skydev",
         role: "Software Engineer",
-        period: "Feb 2026 - Current",
-        description: "Building scalable APIs",
+        period: "Feb 2026 - Jul 2026",
+        description:
+          "Developed and maintained 3 projects with **NestJS**, including a **multi-tenant SaaS platform** — **100+ REST endpoints** across **20+ modules**",
+      },
+      {
+        id: 4,
+        company: "HCLTech",
+        role: "Software Engineer",
+        period: "Aug 2026 - Current",
+        description:
+          "Building scalable **Go microservices** for ANZ Banking, using **Temporal** for workflow orchestration",
       },
     ],
     [],
@@ -47,29 +56,41 @@ export default function ExperienceTimeline() {
       if (!timelineContainer) return;
 
       const items = gsap.utils.toArray(".timeline-item") as HTMLElement[];
+      if (items.length === 0) return;
 
-      // Force a minimum width for the timeline to ensure proper scrolling
-      const minWidth = window.innerWidth * 2; // At least 2x viewport width
-      const actualWidth = timelineContainer.scrollWidth;
-      const scrollDistance = Math.max(
-        actualWidth - window.innerWidth,
-        minWidth,
-      );
+      const firstItem = items[0] as HTMLElement;
+      const lastItem = items[items.length - 1] as HTMLElement;
+
+      const setInitialPadding = () => {
+        const itemWidth = firstItem.offsetWidth;
+        timelineContainer.style.paddingLeft = `${
+          window.innerWidth / 2 - itemWidth / 2
+        }px`;
+      };
+      setInitialPadding();
+
+      // Distance needed so the LAST item's center lands on the viewport
+      // center exactly when the scroll finishes — works for any item count.
+      const getScrollDistance = () => {
+        const lastItemCenter = lastItem.offsetLeft + lastItem.offsetWidth / 2;
+        return Math.max(lastItemCenter - window.innerWidth / 2, 0);
+      };
 
       // Main horizontal scroll animation
       const horizontalTween = gsap.to(timelineContainer, {
-        x: () => `-${scrollDistance}px`,
+        x: () => -getScrollDistance(),
         ease: "none",
         scrollTrigger: {
           trigger: component.current,
           pin: true,
           scrub: 1,
-          end: () => `+=${scrollDistance}`,
+          end: () => `+=${getScrollDistance()}`,
           anticipatePin: 1,
+          invalidateOnRefresh: true, // recompute on resize
         },
       });
 
-      // Simple progress line animation
+      // Progress line — must use the SAME distance so it finishes in sync
       gsap.to(".timeline-line-progress", {
         scaleX: 1,
         transformOrigin: "left center",
@@ -78,7 +99,8 @@ export default function ExperienceTimeline() {
           trigger: component.current,
           scrub: 1,
           start: "top top",
-          end: () => `+=${scrollDistance}`,
+          end: () => `+=${getScrollDistance()}`,
+          invalidateOnRefresh: true,
         },
       });
 
@@ -140,10 +162,30 @@ export default function ExperienceTimeline() {
           },
         });
       }
+
+      const handleResize = () => {
+        setInitialPadding();
+        ScrollTrigger.refresh(); // distances shift once padding changes
+      };
+      window.addEventListener("resize", handleResize);
+
+      return () => window.removeEventListener("resize", handleResize);
     }, component);
 
     return () => ctx.revert();
   }, [experienceData]);
+
+  function renderWithBold(text: string) {
+    return text.split(/(\*\*.*?\*\*)/g).map((part, i) =>
+      part.startsWith("**") && part.endsWith("**") ? (
+        <strong key={i} className="font-semibold text-black">
+          {part.slice(2, -2)}
+        </strong>
+      ) : (
+        part
+      ),
+    );
+  }
 
   return (
     <div id="work" className="bg-gray-50">
@@ -179,7 +221,7 @@ export default function ExperienceTimeline() {
 
           <div
             ref={slider}
-            className="flex items-center absolute left-0 px-[25vw] min-w-max"
+            className="flex items-center absolute left-0 pr-[25vw] min-w-max"
           >
             {experienceData.map((exp, index) => (
               <div
@@ -205,7 +247,7 @@ export default function ExperienceTimeline() {
                     {exp.role}
                   </h4>
                   <p className="text-gray-600 text-sm mt-3 leading-relaxed">
-                    {exp.description}
+                    {renderWithBold(exp.description)}
                   </p>
                 </div>
 
