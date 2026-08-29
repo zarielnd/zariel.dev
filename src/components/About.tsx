@@ -208,14 +208,16 @@ const About = () => {
           {/*Card4*/}
           <BentoTilt className="bento-tilt_1 col-span-2 mr-14 md:col-span-1 md:mr-0 max-h-[30rem]">
             <div className="relative size-full select-none pointer-events-none">
-              <Image
-                src={"/imgs/feature-2.jpg"}
-                alt={"Feature 2"}
-                className="bento-media"
-                fill
-                sizes=""
-                priority
-              ></Image>
+              <div className="absolute right-5 bottom-5 size-30 md:inset-y-5 md:top-5 md:aspect-square md:size-auto">
+                <Image
+                  src={"/logos/temporal.svg"}
+                  alt={"Temporal logo"}
+                  className="bento-media brightness-0 invert object-contain"
+                  fill
+                  sizes="(min-width: 768px) 100vw, 40px"
+                  priority
+                ></Image>
+              </div>
               <div className="relative z-10 flex size-full flex-col justify-between p-5 text-white pointer-events-none">
                 <div className="select-none">
                   <h1 className="bento-title ">CURRENTLY</h1>
