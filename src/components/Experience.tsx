@@ -37,11 +37,11 @@ export default function ExperienceTimeline() {
       },
       {
         id: 4,
-        company: "HCLTech",
+        company: "ANZ via HCLTech",
         role: "Software Engineer",
         period: "Aug 2026 - Current",
         description:
-          "Building scalable **Go microservices** for ANZ Banking, using **Temporal** for workflow orchestration",
+          "Embedded within ANZ's engineering organization as dedicated headcount via HCLTech, building scalable Go microservices and Temporal-based workflows.",
       },
     ],
     [],
@@ -63,9 +63,8 @@ export default function ExperienceTimeline() {
 
       const setInitialPadding = () => {
         const itemWidth = firstItem.offsetWidth;
-        timelineContainer.style.paddingLeft = `${
-          window.innerWidth / 2 - itemWidth / 2
-        }px`;
+        timelineContainer.style.paddingLeft = `${window.innerWidth / 2 - itemWidth / 2
+          }px`;
       };
       setInitialPadding();
 
@@ -233,9 +232,8 @@ export default function ExperienceTimeline() {
                 }}
               >
                 <div
-                  className={`w-72 text-center bg-white border border-gray-200 rounded-lg p-6 shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 ${
-                    index % 2 === 0 ? "order-1 mb-20" : "order-3 mt-20"
-                  }`}
+                  className={`w-72 text-center bg-white border border-gray-200 rounded-lg p-6 shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 ${index % 2 === 0 ? "order-1 mb-20" : "order-3 mt-20"
+                    }`}
                 >
                   <p className="text-gray-600 font-medium text-sm uppercase tracking-wide">
                     {exp.period}
@@ -253,11 +251,10 @@ export default function ExperienceTimeline() {
 
                 <div className="order-2 w-4 h-4 rounded-full bg-black border-4 border-white shadow-lg relative z-10 transition-all duration-300 hover:scale-125">
                   <div
-                    className={`absolute left-1/2 -translate-x-1/2 w-0.5 bg-gray-300 ${
-                      index % 2 === 0
+                    className={`absolute left-1/2 -translate-x-1/2 w-0.5 bg-gray-300 ${index % 2 === 0
                         ? "bottom-full h-16 mb-2"
                         : "top-full h-16 mt-2"
-                    }`}
+                      }`}
                   ></div>
                 </div>
               </div>
