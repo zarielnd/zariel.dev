@@ -48,7 +48,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div
           id="footer-hacked-container"
-          className="grid grid-cols-1 md:grid-cols-4 gap-12"
+          className="grid grid-cols-1 md:grid-cols-4 gap-y-12 gap-x-6 lg:gap-12"
         >
           {/* Column 1 - System Info */}
           <div className="space-y-4">
@@ -111,7 +111,8 @@ const Footer = () => {
               <div className="text-gray-400 text-sm">CONTACT ME AT</div>
               <a
                 href={`mailto:${personalInfo.email}`}
-                className="text-white font-medium hover:underline block"
+                className="text-white text-sm lg:text-base font-medium hover:underline block truncate"
+                title={personalInfo.email.toUpperCase()}
               >
                 {personalInfo.email.toUpperCase()}
               </a>
