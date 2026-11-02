@@ -17,6 +17,9 @@ const RemoveSplash = () => {
       }, 500); // must match duration-500
     };
 
+    // Fallback safety timeout (1200ms) so slow networks and web crawlers are never blocked
+    const fallbackTimer = setTimeout(hideSplash, 1200);
+
     // Wait for all assets (images, fonts, scripts, etc.) to load
     if (document.readyState === "complete") {
       // Already loaded
@@ -24,7 +27,10 @@ const RemoveSplash = () => {
     } else {
       // Wait for load event
       window.addEventListener("load", hideSplash);
-      return () => window.removeEventListener("load", hideSplash);
+      return () => {
+        clearTimeout(fallbackTimer);
+        window.removeEventListener("load", hideSplash);
+      };
     }
   }, []);
 

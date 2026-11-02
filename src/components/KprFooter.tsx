@@ -4,8 +4,11 @@ import { personalInfo } from "@/data/personal";
 
 const KprFooter = () => {
   return (
-    // This footer is fixed to the viewport and sits in the background (z-0)
-    <footer className="fixed top-0 left-0 w-full h-screen z-0 bg-black">
+    // This background console is fixed to the viewport and sits behind content (z-0)
+    <aside
+      aria-hidden="true"
+      className="fixed top-0 left-0 w-full h-screen z-0 bg-black"
+    >
       <div className="flex items-center justify-center h-full relative overflow-hidden">
         {/* Main KPR Banner Content */}
         <div className="text-center z-10 max-w-4xl mx-auto px-6">
@@ -15,7 +18,7 @@ const KprFooter = () => {
           <div className="relative w-full max-w-2xl mx-auto mb-8">
             <Image
               src="/imgs/logo.png"
-              alt="Logo"
+              alt="Zariel Dev Logo"
               width={800}
               height={400}
               className="w-[70%] h-auto mx-auto"
@@ -49,7 +52,7 @@ const KprFooter = () => {
           </div>
         </div>
       </div>
-    </footer>
+    </aside>
   );
 };
 

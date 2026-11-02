@@ -9,7 +9,7 @@ import { SmartVideo } from "./SmartVideo";
 
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const videoSrc = "videos/vlhlll.mp4";
+  const videoSrc = "/videos/vlhlll.mp4";
   const words = ["Secure", "Modern", "Scalable"];
 
   useGSAP(
@@ -53,8 +53,9 @@ const Hero = () => {
   );
 
   return (
-    <div
+    <section
       id="home"
+      aria-label="Hero Introduction"
       ref={containerRef}
       className="relative h-dvh w-screen overflow-x-hidden bg-black"
     >
@@ -72,13 +73,22 @@ const Hero = () => {
           className="absolute top-0 left-0 h-full sm:w-[80vw] md:w-[70vw] lg:w-[40vw] bg-black/40 backdrop-blur-md flex flex-col justify-center pl-16 z-20"
           style={{ willChange: "transform, opacity" }}
         >
-          <HackedText className="text-left font-bold text-white drop-shadow-lg select-none text-3xl sm:text-4xl md:text-4xl lg:text-6xl">
+          <HackedText
+            tag="h1"
+            className="text-left font-bold text-white drop-shadow-lg select-none text-3xl sm:text-4xl md:text-4xl lg:text-6xl"
+          >
             Hi, I&apos;m Zariel
           </HackedText>
-          <HackedText className="block mb-4 select-none text-2xl md:text-2xl lg:text-4xl">
+          <HackedText
+            tag="p"
+            className="block mb-4 select-none text-2xl md:text-2xl lg:text-4xl"
+          >
             A Full stack Software Engineer
           </HackedText>
-          <HackedText className="block select-none text-2xl md:text-2xl lg:text-4xl">
+          <HackedText
+            tag="p"
+            className="block select-none text-2xl md:text-2xl lg:text-4xl"
+          >
             I&apos;m Dedicated To Building
           </HackedText>
           <FlipWord
@@ -86,7 +96,10 @@ const Hero = () => {
             duration={2500}
             className="font-bold text-white flip-word select-none text-2xl sm:text-3xl md:text-3xl lg:text-4xl"
           />
-          <HackedText className="block mb-4 select-none text-2xl md:text-2xl lg:text-4xl">
+          <HackedText
+            tag="p"
+            className="block mb-4 select-none text-2xl md:text-2xl lg:text-4xl"
+          >
             Web Applications
           </HackedText>
           <Button
@@ -98,7 +111,7 @@ const Hero = () => {
           />
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -18,13 +18,13 @@ const Project = ({ project, setPreview }: ProjectProps) => {
 
   return (
     <>
-      <div
+      <article
         className="flex-wrap items-center justify-between pt-10 space-y-14 sm:flex sm:space-y-0"
         onMouseEnter={() => setPreview(image)}
         onMouseLeave={() => setPreview(undefined)}
       >
         <div>
-          <p className="text-2xl text-black">{title}</p>
+          <h3 className="text-2xl font-bold text-black">{title}</h3>
           <div className="flex gap-5 mt-2 text-gray-700">
             {tags.map((tag) => (
               <span key={tag.id}>{tag.name}</span>
@@ -35,13 +35,13 @@ const Project = ({ project, setPreview }: ProjectProps) => {
         <button
           type="button"
           onClick={openModal}
-          aria-label={`Read more about ${title}`}
+          aria-label={`Read details about ${title}`}
           className="flex items-center gap-1 cursor-pointer hover-animation text-black"
         >
           Read More <TiArrowRight />
         </button>
         <GradientDivider />
-      </div>
+      </article>
 
       {isModalOpen && (
         <ProjectDetails

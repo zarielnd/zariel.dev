@@ -11,8 +11,8 @@ export const myProjects: Project[] = [
       "Developing scalable applications using Next.js",
       "Designing responsive and visually polished user interfaces",
     ],
-    href: "https://example.com/project-one",
-    logo: "https://example.com/logo1.png",
+    href: "https://zariel.dev",
+    logo: "/imgs/logo.png",
     image: "/imgs/portfolio.png",
     tags: [
       {
@@ -53,7 +53,7 @@ export const myProjects: Project[] = [
       "Designing structured database systems with SQL Server",
     ],
     href: "https://science.fpt.edu.vn/",
-    logo: "https://example.com/logo1.png",
+    logo: "/imgs/fpt.png",
     image: "/imgs/fpt.png",
     tags: [
       {

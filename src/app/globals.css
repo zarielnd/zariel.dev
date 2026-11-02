@@ -58,7 +58,8 @@ body {
   width: 100dvw;
   overflow-x: hidden;
   font-family:
-    Space Mono,
+    var(--font-geist-mono),
+    ui-monospace,
     monospace,
     sans-serif;
 

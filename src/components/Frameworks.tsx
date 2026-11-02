@@ -48,7 +48,7 @@ interface IconProps {
 const Icon = ({ skill }: IconProps) => {
   return (
     <Image
-      src={`logos/${skill}.svg`}
+      src={`/logos/${skill}.svg`}
       alt={`${skill} icon`}
       className="duration-200 rounded-sm hover:scale-110 brightness-0 invert object-contain will-change-transform"
       fill

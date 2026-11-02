@@ -42,6 +42,7 @@ const About = () => {
       <div className="container mx-auto px-3 md:px-10">
         <div className="px-5 py-32 select-none hero-heading">
           <HackedText
+            tag="h2"
             hoverAnimation={true}
             className="max-w-md text-white font-bold"
             playOnLoad={false}
@@ -53,10 +54,10 @@ const About = () => {
         {/*Card 1*/}
         <BentoTilt className="bento-tilt_1 border-hsla relative mb-7 h-96 max-h-[30rem] w-full overflow-hidden rounded-md md:h-[65vh]">
           <div className="relative size-full">
-            <SmartVideo src="videos/feature-1.mp4" className="bento-media" />
+            <SmartVideo src="/videos/feature-1.mp4" className="bento-media" />
             <div className="relative z-10 flex size-full flex-col justify-between p-5 text-white">
               <div className="select-none">
-                <h1 className="bento-title">Bonjour, I&apos;m Zariel</h1>
+                <h3 className="bento-title">Bonjour, I&apos;m Zariel</h3>
                 <p className="bento-description">
                   Over the past two years, I&apos;ve built solid frontend and
                   backend foundations to ship dynamic software and web
@@ -80,7 +81,7 @@ const About = () => {
               </div>
               <div className="relative z-10 flex size-full flex-col justify-between p-5 text-white pointer-events-none">
                 <div className="select-none">
-                  <h1 className="bento-title">Tech stack</h1>
+                  <h3 className="bento-title">Tech Stack</h3>
                   <p className="bento-description">
                     I specialize in a diverse range of modern web technologies,
                     delivering scalable and efficient solutions.
@@ -98,7 +99,7 @@ const About = () => {
               </figure>
               <div className="relative z-10 flex size-full flex-col justify-between p-5 text-white pointer-events-none">
                 <div className="select-none">
-                  <h1 className="bento-title">Time Zone</h1>
+                  <h3 className="bento-title">Time Zone</h3>
                   <p className="mt-3 max-w-64 text-xs md:text-base">
                     I&apos;m based in Jupiter, and open to remote work worldwide
                   </p>
@@ -121,9 +122,9 @@ const About = () => {
               </div>
               <div className="relative z-10 flex size-full flex-col justify-between p-5 text-white pointer-events-none">
                 <div className="select-none">
-                  <h1 className="uppercase font-black text-3xl md:text-4xl xl:text-6xl">
+                  <h3 className="uppercase font-black text-3xl md:text-4xl xl:text-6xl">
                     CURRENTLY
-                  </h1>
+                  </h3>
                   <p className="mt-3 max-w-64 text-xs md:text-base text-str">
                     Deep in Go and Temporal at the moment; durable workflows are
                     the new obsession.
@@ -136,9 +137,9 @@ const About = () => {
           {/*Card5*/}
           <BentoTilt className="bento-tilt_2 max-h-[30rem]">
             <div className="flex size-full flex-col justify-between bg-white p-5">
-              <h1 className="special-font uppercase font-black text-black text-4xl md:text-4xl lg:text-6xl">
+              <blockquote className="special-font uppercase font-black text-black text-3xl md:text-4xl lg:text-5xl">
                 &quot;Know how to learn. Then, want to learn.&quot;
-              </h1>
+              </blockquote>
               <p className="self-end text-black font-semibold text-xs md:text-sm">
                 - Katherine Johnson
               </p>
@@ -148,7 +149,7 @@ const About = () => {
           {/*Card6*/}
           <BentoTilt className="bento-tilt_2 max-h-[30rem]">
             <SmartVideo
-              src="videos/feature-4.mp4"
+              src="/videos/feature-4.mp4"
               className="bento-media border-hsla"
             />
           </BentoTilt>

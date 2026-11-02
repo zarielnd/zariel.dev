@@ -61,19 +61,18 @@ const ProjectDetails = ({ project, onClose }: ProjectDetailsProps) => {
         </button>
         <Image
           src={project.image}
-          alt={project.title}
+          alt={`Screenshot of ${project.title}`}
           className="w-full rounded-t-2xl object-cover"
           width={640}
           height={360}
-          priority
         />
         <div className="p-5">
-          <h5
+          <h3
             id={`project-title-${project.id}`}
             className="mb-2 text-2xl font-bold text-white"
           >
             {project.title}
-          </h5>
+          </h3>
           <p className="mb-3 font-normal text-neutral-50">
             {project.description}
           </p>
@@ -102,6 +101,7 @@ const ProjectDetails = ({ project, onClose }: ProjectDetailsProps) => {
                 className="inline-flex items-center gap-1"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={`View live demo of ${project.title}`}
               >
                 View Project <TiArrowRight />
               </a>

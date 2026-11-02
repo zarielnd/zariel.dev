@@ -21,10 +21,14 @@ const Projects = () => {
   return (
     <section
       id="projects"
+      aria-label="Featured Projects"
       className="relative c-space bg-white"
       onMouseMove={handleMouseMove}
     >
-      <HackedText className="text-left font-bold !text-black select-none hero-heading">
+      <HackedText
+        tag="h2"
+        className="text-left font-bold !text-black select-none hero-heading"
+      >
         My Selected Projects
       </HackedText>
       <GradientDivider />
@@ -36,7 +40,7 @@ const Projects = () => {
           className="hidden lg:block fixed top-0 left-0 z-50 object-cover h-56 rounded-lg shadow-lg pointer-events-none w-80"
           src={preview}
           style={{ x: springX, y: springY }}
-          alt="Project preview"
+          alt="Featured project interactive preview"
         />
       )}
     </section>

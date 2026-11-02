@@ -145,12 +145,13 @@ export default function ExperienceTimeline() {
   }
 
   return (
-    <div id="work" className="bg-gray-50">
+    <section id="work" aria-label="Professional Experience" className="bg-gray-50">
       <div className="relative bg-white flex items-center justify-center py-24">
         <div className="text-center">
           <div id="hacked-title-container">
             <HackedText
               ref={hackedRef}
+              tag="h2"
               className="hero-heading font-bold !text-black drop-shadow-lg select-none"
               playOnLoad={true}
             >
@@ -222,6 +223,6 @@ export default function ExperienceTimeline() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
