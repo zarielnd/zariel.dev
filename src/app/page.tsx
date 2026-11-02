@@ -1,7 +1,6 @@
 import App from "@/components/App";
 
-const Page = async () => {
-  await new Promise((r) => setTimeout(r, 500));
+const Page = () => {
   return <App />;
 };
 

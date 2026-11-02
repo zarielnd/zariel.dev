@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { personalInfo } from "@/data/personal";
 
 const KprFooter = () => {
   return (
@@ -40,7 +41,11 @@ const KprFooter = () => {
           </div>
           <div className="space-y-4 text-gray-400 text-sm font-mono">
             <div>AVAILABLE FOR FREELANCE • REMOTE WORLDWIDE</div>
-            <div className="text-white">zariel.nd@gmail.com</div>
+            <div className="text-white">
+              <a href={`mailto:${personalInfo.email}`} className="hover:underline">
+                {personalInfo.email}
+              </a>
+            </div>
           </div>
         </div>
       </div>

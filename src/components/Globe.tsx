@@ -227,6 +227,8 @@ export function Globe({
     >
       <canvas
         ref={canvasRef}
+        role="img"
+        aria-label="Interactive 3D globe visualization"
         className="w-full h-full opacity-0 transition-opacity duration-500"
         onPointerDown={(e) => {
           updatePointerInteraction(e.clientX);

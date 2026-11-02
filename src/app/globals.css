@@ -137,14 +137,6 @@ body {
     @apply opacity-0 pointer-events-none;
   }
 
-  .spinner {
-    @apply h-12 w-12 rounded-full border-2 border-white/20 border-t-white;
-  }
-
-  .animate-spinner {
-    animation: spinner-rotate 0.8s linear infinite;
-  }
-
   .bento-tilt_1 {
     @apply relative border border-white/20 overflow-hidden rounded-md transition-transform duration-300 ease-out;
   }

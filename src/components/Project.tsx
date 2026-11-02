@@ -1,25 +1,11 @@
 import React, { useState } from "react";
 import { TiArrowRight } from "react-icons/ti";
+import type { Project as ProjectType } from "@/types";
 import ProjectDetails from "./ProjectDetails";
-
-interface Tag {
-  id: number;
-  name: string;
-  path: string;
-}
-
-interface ProjectData {
-  id: number;
-  title: string;
-  description: string;
-  subDescription: string[];
-  href: string;
-  image: string;
-  tags: Tag[];
-}
+import GradientDivider from "./ui/GradientDivider";
 
 interface ProjectProps {
-  project: ProjectData;
+  project: ProjectType;
   setPreview: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
@@ -47,13 +33,16 @@ const Project = ({ project, setPreview }: ProjectProps) => {
         </div>
 
         <button
+          type="button"
           onClick={openModal}
+          aria-label={`Read more about ${title}`}
           className="flex items-center gap-1 cursor-pointer hover-animation text-black"
         >
           Read More <TiArrowRight />
         </button>
-        <div className="bg-gradient-to-r from-transparent via-neutral-950 to-transparent mt-12 h-[1px] w-full" />
+        <GradientDivider />
       </div>
+
       {isModalOpen && (
         <ProjectDetails
           key={project.id}

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import { motion, useMotionValue, useSpring } from "motion/react";
 import HackedText from "./HackedText";
 import Project from "./Project";
-import { myProjects } from "../constants";
-import { motion, useMotionValue, useSpring } from "motion/react";
+import GradientDivider from "./ui/GradientDivider";
+import { myProjects } from "@/data/projects";
 
 const Projects = () => {
   const x = useMotionValue(0);
@@ -19,13 +20,14 @@ const Projects = () => {
 
   return (
     <section
+      id="projects"
       className="relative c-space bg-white"
       onMouseMove={handleMouseMove}
     >
       <HackedText className="text-left font-bold !text-black select-none hero-heading">
         My Selected Projects
       </HackedText>
-      <div className="bg-gradient-to-r from-transparent via-neutral-950 to-transparent mt-12 h-[1px] w-full" />
+      <GradientDivider />
       {myProjects.map((project) => (
         <Project key={project.id} project={project} setPreview={setPreview} />
       ))}
@@ -34,7 +36,7 @@ const Projects = () => {
           className="hidden lg:block fixed top-0 left-0 z-50 object-cover h-56 rounded-lg shadow-lg pointer-events-none w-80"
           src={preview}
           style={{ x: springX, y: springY }}
-          alt="Preview"
+          alt="Project preview"
         />
       )}
     </section>

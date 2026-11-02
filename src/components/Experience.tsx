@@ -1,60 +1,19 @@
-import React, { useLayoutEffect, useRef, useMemo } from "react";
+import React, { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import HackedText, { HackedTextHandle } from "./HackedText";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-gsap.registerPlugin(ScrollTrigger);
+import { experienceData } from "@/data/experience";
 
 export default function ExperienceTimeline() {
   const component = useRef<HTMLDivElement>(null);
   const slider = useRef<HTMLDivElement>(null);
-
-  // --- Experience Data - Memoized to prevent unnecessary re-renders ---
-  const experienceData = useMemo(
-    () => [
-      {
-        id: 1,
-        company: "Thang Long Instrument.",
-        role: "Software Engineer Intern",
-        period: "Jan 2024 - Jun 2024",
-        description:
-          "Independently designed and built a Storage Management System with **Spring Boot** in a 2-person intern team",
-      },
-      {
-        id: 2,
-        company: "Lab SAP FPT University",
-        role: "Software Engineer",
-        period: "Jan 2025 - Jun 2025",
-        description:
-          "Designed and built a request-change approval workflow for a Scientific Project Management System using **.NET**, FPT University's SMIA office",
-      },
-      {
-        id: 3,
-        company: "Skydev",
-        role: "Software Engineer",
-        period: "Feb 2026 - Jul 2026",
-        description:
-          "Developed and maintained 3 projects with **NestJS**, including a **multi-tenant SaaS platform** — **100+ REST endpoints** across **20+ modules**",
-      },
-      {
-        id: 4,
-        company: "ANZ via HCLTech",
-        role: "Software Engineer",
-        period: "Aug 2026 - Current",
-        description:
-          "Embedded within ANZ's engineering organization as dedicated headcount via HCLTech, building scalable Go microservices and Temporal-based workflows.",
-      },
-    ],
-    [],
-  );
   const hackedRef = useRef<HackedTextHandle>(null);
 
-  useLayoutEffect(() => {
-    if (!slider.current || !component.current) return;
+  useGSAP(
+    () => {
+      if (!slider.current || !component.current) return;
 
-    const ctx = gsap.context(() => {
       const timelineContainer = slider.current;
-      if (!timelineContainer) return;
-
       const items = gsap.utils.toArray(".timeline-item") as HTMLElement[];
       if (items.length === 0) return;
 
@@ -63,13 +22,13 @@ export default function ExperienceTimeline() {
 
       const setInitialPadding = () => {
         const itemWidth = firstItem.offsetWidth;
-        timelineContainer.style.paddingLeft = `${window.innerWidth / 2 - itemWidth / 2
-          }px`;
+        timelineContainer.style.paddingLeft = `${
+          window.innerWidth / 2 - itemWidth / 2
+        }px`;
       };
       setInitialPadding();
 
-      // Distance needed so the LAST item's center lands on the viewport
-      // center exactly when the scroll finishes — works for any item count.
+      // Distance needed so the LAST item's center lands on viewport center
       const getScrollDistance = () => {
         const lastItemCenter = lastItem.offsetLeft + lastItem.offsetWidth / 2;
         return Math.max(lastItemCenter - window.innerWidth / 2, 0);
@@ -85,11 +44,11 @@ export default function ExperienceTimeline() {
           scrub: 1,
           end: () => `+=${getScrollDistance()}`,
           anticipatePin: 1,
-          invalidateOnRefresh: true, // recompute on resize
+          invalidateOnRefresh: true,
         },
       });
 
-      // Progress line — must use the SAME distance so it finishes in sync
+      // Progress line sync
       gsap.to(".timeline-line-progress", {
         scaleX: 1,
         transformOrigin: "left center",
@@ -164,15 +123,14 @@ export default function ExperienceTimeline() {
 
       const handleResize = () => {
         setInitialPadding();
-        ScrollTrigger.refresh(); // distances shift once padding changes
+        ScrollTrigger.refresh();
       };
       window.addEventListener("resize", handleResize);
 
       return () => window.removeEventListener("resize", handleResize);
-    }, component);
-
-    return () => ctx.revert();
-  }, [experienceData]);
+    },
+    { scope: component },
+  );
 
   function renderWithBold(text: string) {
     return text.split(/(\*\*.*?\*\*)/g).map((part, i) =>
@@ -188,7 +146,7 @@ export default function ExperienceTimeline() {
 
   return (
     <div id="work" className="bg-gray-50">
-      <div className="relative bg-white flex items-center justify-center 100vh">
+      <div className="relative bg-white flex items-center justify-center py-24">
         <div className="text-center">
           <div id="hacked-title-container">
             <HackedText
@@ -199,7 +157,7 @@ export default function ExperienceTimeline() {
               My Professional Journey
             </HackedText>
           </div>
-          <p id="exp-text" className="text-xl text-gray-600">
+          <p id="exp-text" className="text-xl text-gray-600 mt-2">
             Scroll down to explore my professional experience
           </p>
         </div>
@@ -210,12 +168,12 @@ export default function ExperienceTimeline() {
         className="relative h-[150vh] bg-white overflow-hidden"
       >
         <div className="h-screen w-full flex items-center relative">
-          {/* Fixed progress line that doesn't move with container */}
+          {/* Fixed progress line */}
           <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gray-300 -translate-y-1/2 z-0">
             <div
               className="h-0.5 bg-black timeline-line-progress w-full"
               style={{ transform: "scaleX(0)" }}
-            ></div>
+            />
           </div>
 
           <div
@@ -232,8 +190,9 @@ export default function ExperienceTimeline() {
                 }}
               >
                 <div
-                  className={`w-72 text-center bg-white border border-gray-200 rounded-lg p-6 shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 ${index % 2 === 0 ? "order-1 mb-20" : "order-3 mt-20"
-                    }`}
+                  className={`w-72 text-center bg-white border border-gray-200 rounded-lg p-6 shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 ${
+                    index % 2 === 0 ? "order-1 mb-20" : "order-3 mt-20"
+                  }`}
                 >
                   <p className="text-gray-600 font-medium text-sm uppercase tracking-wide">
                     {exp.period}
@@ -251,11 +210,12 @@ export default function ExperienceTimeline() {
 
                 <div className="order-2 w-4 h-4 rounded-full bg-black border-4 border-white shadow-lg relative z-10 transition-all duration-300 hover:scale-125">
                   <div
-                    className={`absolute left-1/2 -translate-x-1/2 w-0.5 bg-gray-300 ${index % 2 === 0
+                    className={`absolute left-1/2 -translate-x-1/2 w-0.5 bg-gray-300 ${
+                      index % 2 === 0
                         ? "bottom-full h-16 mb-2"
                         : "top-full h-16 mt-2"
-                      }`}
-                  ></div>
+                    }`}
+                  />
                 </div>
               </div>
             ))}

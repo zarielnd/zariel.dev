@@ -108,6 +108,7 @@ const HackedText = forwardRef<HackedTextHandle, HackedTextProps>(
     return (
       <Tag
         id={id}
+        aria-label={children}
         onMouseEnter={hoverAnimation ? runAllAnimations : undefined}
         className={`whitespace-pre-wrap ${className ?? ""}`}
       >

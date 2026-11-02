@@ -1,7 +1,7 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import emailjs from "@emailjs/browser";
-import Alert from "./Alert";
+import Alert, { type AlertType } from "./Alert";
+import { personalInfo } from "@/data/personal";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -12,10 +12,10 @@ const Contact = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-  const [alertType, setAlertType] = useState("success");
+  const [alertType, setAlertType] = useState<AlertType>("success");
   const [alertMessage, setAlertMessage] = useState("");
 
-  const showAlertMessage = (type: string, message: string) => {
+  const showAlertMessage = (type: AlertType, message: string) => {
     setAlertType(type);
     setAlertMessage(message);
     setShowAlert(true);
@@ -27,56 +27,72 @@ const Contact = () => {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [e.target.name]: e.target.value,
-    });
+    }));
   };
 
-  const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
+
+    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+    const toEmail =
+      process.env.NEXT_PUBLIC_CONTACT_TO_EMAIL || personalInfo.email;
+    const toName =
+      process.env.NEXT_PUBLIC_CONTACT_TO_NAME || personalInfo.name;
+
+    if (!serviceId || !templateId || !publicKey) {
+      setIsLoading(false);
+      console.error(
+        "EmailJS configuration error: Missing environment variables (NEXT_PUBLIC_EMAILJS_*).",
+      );
+      showAlertMessage(
+        "danger",
+        "Contact service is temporarily unavailable. Please email directly.",
+      );
+      return;
+    }
+
     try {
       await emailjs.send(
-        "service_xuhg247",
-        "template_lbkm8eb",
+        serviceId,
+        templateId,
         {
           from_name: formData.name,
-          to_name: "Zariel",
+          to_name: toName,
           from_email: formData.email,
-          to_email: "zariel.nd@gmail.com",
+          to_email: toEmail,
           message: formData.message,
         },
-        "fKYaXr8qFMGlJKjxG",
+        publicKey,
       );
       setIsLoading(false);
-      showAlertMessage("success", "Your message have been sent");
+      showAlertMessage("success", "Your message has been sent!");
       setFormData({ name: "", email: "", message: "" });
     } catch (error) {
       setIsLoading(false);
-      console.log(error);
-      showAlertMessage("danger", "Something went wrong!");
+      console.error("Email send error:", error);
+      showAlertMessage("danger", "Something went wrong! Please try again.");
     }
-
-    //service_xuhg247
-    //template_ilo8a1l
   };
+
   return (
     <section
       id="contact"
-      className="relative flex items-center c-space bg-white section-spacing"
+      className="relative flex items-center c-space bg-white section-spacing py-20"
     >
       {showAlert && <Alert type={alertType} text={alertMessage} />}
-      <div
-        className="flex flex-col items-center justify-center max-w-md p-5 mx-auto border border-black
-        rounded-2xl bg-white"
-      >
+      <div className="flex flex-col items-center justify-center max-w-md p-5 mx-auto border border-black rounded-2xl bg-white w-full">
         <div className="flex flex-col items-start w-full gap-5 mb-10">
-          <h2 className="text-3xl text-black">Let&rsquo;s Talk</h2>
+          <h2 className="text-3xl font-bold text-black">Let&rsquo;s Talk</h2>
           <p className="text-gray-600">
             Whether you&rsquo;re looking to build a new website, improve your
             existing platform, or bring a unique project to life, I&rsquo;m here
-            to help
+            to help.
           </p>
         </div>
         <form className="w-full" onSubmit={handleSubmit}>
@@ -107,8 +123,8 @@ const Contact = () => {
               id="email"
               name="email"
               className="field-input field-input-focus !border-black text-black"
-              type="text"
-              placeholder="JaneDoe@gmail.com"
+              type="email"
+              placeholder="jane@example.com"
               required
               autoComplete="email"
               value={formData.email}
@@ -127,19 +143,20 @@ const Contact = () => {
               name="message"
               className="field-input field-input-focus !border-black text-black"
               rows={4}
-              placeholder="Share your thoughts"
+              placeholder="Share your thoughts..."
               required
-              autoComplete="message"
+              autoComplete="off"
               value={formData.message}
               onChange={handleChange}
             />
           </div>
           <button
             type="submit"
-            className="w-full px-1 py-3 text-lg text-center rounded-md cursor-pointer
-            bg-black from-black to-gray-800 hover-animation"
+            disabled={isLoading}
+            className="w-full px-1 py-3 text-lg font-medium text-center rounded-md cursor-pointer
+            bg-black text-white hover:bg-neutral-800 transition-colors disabled:opacity-50"
           >
-            {!isLoading ? "Send" : "Sending"}
+            {isLoading ? "Sending..." : "Send Message"}
           </button>
         </form>
       </div>

@@ -1,8 +1,10 @@
 import React from "react";
 import { motion, AnimatePresence } from "motion/react";
 
+export type AlertType = "success" | "danger";
+
 interface AlertProps {
-  type: string;
+  type: AlertType;
   text: string;
 }
 
@@ -16,8 +18,9 @@ const Alert = ({ type, text }: AlertProps) => {
   return (
     <AnimatePresence>
       <motion.div
-        className="fixed z-50 flex items-center justify-center
-    bottom-5 right-5"
+        role="alert"
+        aria-live="polite"
+        className="fixed z-50 flex items-center justify-center bottom-5 right-5"
         initial="hidden"
         animate="visible"
         exit="exit"
@@ -26,18 +29,17 @@ const Alert = ({ type, text }: AlertProps) => {
       >
         <div
           className={`p-2 ${
-            type === "danger" ? "bg-red-500" : "bg-green-400"
-          } items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex
-             rounded-md p-5`}
+            type === "danger" ? "bg-red-500" : "bg-green-500"
+          } items-center text-white leading-none rounded-md lg:rounded-full flex lg:inline-flex p-5 shadow-lg`}
         >
-          <p
-            className={`flex rounded-full ${
-              type === "danger" ? "bg-red-500" : "bg-green-400"
+          <span
+            className={`flex rounded-full px-2 py-1 uppercase text-xs font-bold mr-3 ${
+              type === "danger" ? "bg-red-700" : "bg-green-700"
             }`}
           >
             {type === "danger" ? "Failed" : "Success"}
-          </p>
-          <p className="mr-2 text-left">{text}</p>
+          </span>
+          <span className="text-left font-medium">{text}</span>
         </div>
       </motion.div>
     </AnimatePresence>

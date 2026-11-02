@@ -7,6 +7,7 @@ interface ButtonProps {
   leftIcon?: React.ReactNode;
   containerClass?: string;
   scrollTarget?: string;
+  onClick?: () => void;
 }
 
 const Button = ({
@@ -14,25 +15,32 @@ const Button = ({
   id,
   rightIcon,
   leftIcon,
-  containerClass,
+  containerClass = "",
   scrollTarget,
+  onClick,
 }: ButtonProps) => {
   const handleClick = () => {
+    if (onClick) {
+      onClick();
+    }
     if (scrollTarget) {
       const el = document.getElementById(scrollTarget);
-      if (el) el.scrollIntoView({ behavior: "smooth" });
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
     }
   };
 
   return (
     <button
+      type="button"
       id={id}
       onClick={handleClick}
       className={`group relative z-10 w-fit cursor-pointer overflow-hidden rounded-full bg-violet-50 px-7 py-3 text-black ${containerClass}`}
     >
       {leftIcon}
       <span className="relative inline-flex overflow-hidden text-xs uppercase">
-        <div>{title}</div>
+        <span>{title}</span>
       </span>
       {rightIcon}
     </button>

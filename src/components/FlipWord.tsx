@@ -5,8 +5,8 @@ const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 interface HackedFlipWordsProps {
   words: string[];
-  duration?: number; // Duration in milliseconds for each word to be displayed
-  className?: string; // Additional Tailwind classes
+  duration?: number;
+  className?: string;
 }
 
 export const FlipWord: React.FC<HackedFlipWordsProps> = ({
@@ -15,7 +15,7 @@ export const FlipWord: React.FC<HackedFlipWordsProps> = ({
   className,
 }) => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [displayText, setDisplayText] = useState(words[0]);
+  const [displayText, setDisplayText] = useState(words[0] || "");
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const runHackingAnimation = useCallback((targetWord: string) => {
@@ -69,12 +69,19 @@ export const FlipWord: React.FC<HackedFlipWordsProps> = ({
     };
   }, [currentWordIndex, words, duration, runHackingAnimation]);
 
+  const activeWord = words[currentWordIndex] || "";
+
   return (
-    <div className={twMerge("inline-block relative text-left", className)}>
+    <div
+      className={twMerge("inline-block relative text-left", className)}
+      aria-live="polite"
+      aria-label={activeWord}
+    >
       <span className={twMerge("whitespace-nowrap", className)}>
         {displayText}
       </span>
     </div>
   );
 };
+
 export default FlipWord;
