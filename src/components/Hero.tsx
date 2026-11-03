@@ -70,35 +70,35 @@ const Hero = () => {
         />
         <div
           id="content"
-          className="absolute top-0 left-0 h-full sm:w-[80vw] md:w-[70vw] lg:w-[40vw] bg-black/40 backdrop-blur-md flex flex-col justify-center pl-16 z-20"
+          className="absolute top-0 left-0 h-full w-full sm:w-[80vw] md:w-[70vw] lg:w-[48vw] xl:w-[42vw] 2xl:w-[40vw] bg-black/40 backdrop-blur-md flex flex-col justify-center pl-8 sm:pl-16 pr-8 sm:pr-12 lg:pr-14 z-20"
           style={{ willChange: "transform, opacity" }}
         >
           <HackedText
             tag="h1"
-            className="text-left font-bold text-white drop-shadow-lg select-none text-3xl sm:text-4xl md:text-4xl lg:text-6xl"
+            className="text-left font-bold text-white drop-shadow-lg select-none text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl"
           >
             Hi, I&apos;m Zariel
           </HackedText>
           <HackedText
             tag="p"
-            className="block mb-4 select-none text-2xl md:text-2xl lg:text-4xl"
+            className="block mb-4 select-none text-white text-base sm:text-lg md:text-lg lg:text-xl xl:text-2xl"
           >
             A Full stack Software Engineer
           </HackedText>
           <HackedText
             tag="p"
-            className="block select-none text-2xl md:text-2xl lg:text-4xl"
+            className="block select-none text-white text-base sm:text-lg md:text-lg lg:text-xl xl:text-2xl"
           >
             I&apos;m Dedicated To Building
           </HackedText>
           <FlipWord
             words={words}
             duration={2500}
-            className="font-bold text-white flip-word select-none text-2xl sm:text-3xl md:text-3xl lg:text-4xl"
+            className="font-bold text-white flip-word select-none text-base sm:text-lg md:text-lg lg:text-xl xl:text-2xl"
           />
           <HackedText
             tag="p"
-            className="block mb-4 select-none text-2xl md:text-2xl lg:text-4xl"
+            className="block mb-4 select-none text-white text-base sm:text-lg md:text-lg lg:text-xl xl:text-2xl"
           >
             Web Applications
           </HackedText>
