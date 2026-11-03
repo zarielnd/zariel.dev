@@ -9,7 +9,7 @@ import { SmartVideo } from "./SmartVideo";
 
 const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const videoSrc = "/videos/vlhlll.mp4";
+  const videoSrc = "/videos/vlhlll.webm";
   const words = ["Secure", "Modern", "Scalable"];
 
   useGSAP(

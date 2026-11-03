@@ -1,10 +1,14 @@
 import { useEffect, useRef } from "react";
 
 interface SmartVideoProps extends React.VideoHTMLAttributes<HTMLVideoElement> {
-  src: string;
+  src?: string;
 }
 
-export const SmartVideo: React.FC<SmartVideoProps> = ({ ...props }) => {
+export const SmartVideo: React.FC<SmartVideoProps> = ({
+  src,
+  children,
+  ...props
+}) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
@@ -40,6 +44,26 @@ export const SmartVideo: React.FC<SmartVideoProps> = ({ ...props }) => {
       playsInline
       preload="metadata"
       {...props}
-    />
+    >
+      {src && (
+        <>
+          {/\.(mp4|webm)$/i.test(src) ? (
+            <>
+              <source
+                src={src.replace(/\.(mp4|webm)$/i, ".webm")}
+                type="video/webm"
+              />
+              <source
+                src={src.replace(/\.(mp4|webm)$/i, ".mp4")}
+                type="video/mp4"
+              />
+            </>
+          ) : (
+            <source src={src} />
+          )}
+        </>
+      )}
+      {children}
+    </video>
   );
 };
