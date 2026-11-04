@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import RemoveSplash from "@/components/RemoveSplash";
 import { personalInfo, socialLinks } from "@/data/personal";
 
 const geistSans = Geist({
@@ -16,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://zariel.dev"),
+  metadataBase: new URL("https://zariel-dev.vercel.app"),
   title: {
     default: "Zariel Dev — Full Stack Software Engineer",
     template: "%s | Zariel Dev",
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
     "Tailwind CSS",
     "Web Architecture",
   ],
-  authors: [{ name: personalInfo.name, url: "https://zariel.dev" }],
+  authors: [{ name: personalInfo.name, url: "https://zariel-dev.vercel.app" }],
   creator: personalInfo.name,
   publisher: personalInfo.name,
   robots: {
@@ -56,7 +57,7 @@ export const metadata: Metadata = {
     title: "Zariel Dev — Full Stack Software Engineer",
     description:
       "Explore modern, scalable web applications and interactive software engineering projects.",
-    url: "https://zariel.dev",
+    url: "https://zariel-dev.vercel.app",
     siteName: "Zariel Dev",
     locale: "en_US",
     type: "website",
@@ -82,39 +83,39 @@ const jsonLd = {
   "@graph": [
     {
       "@type": "WebSite",
-      "@id": "https://zariel.dev/#website",
-      "url": "https://zariel.dev",
+      "@id": "https://zariel-dev.vercel.app/#website",
+      "url": "https://zariel-dev.vercel.app",
       "name": "Zariel Dev",
       "description":
         "Portfolio of Zariel, a Full Stack Software Engineer specializing in modern web architecture, scalable systems, and creative frontend engineering.",
       "publisher": {
-        "@id": "https://zariel.dev/#person",
+        "@id": "https://zariel-dev.vercel.app/#person",
       },
       "inLanguage": "en-US",
     },
     {
       "@type": "ProfilePage",
-      "@id": "https://zariel.dev/#profilepage",
-      "url": "https://zariel.dev",
+      "@id": "https://zariel-dev.vercel.app/#profilepage",
+      "url": "https://zariel-dev.vercel.app",
       "name": "Zariel Dev — Full Stack Software Engineer",
       "isPartOf": {
-        "@id": "https://zariel.dev/#website",
+        "@id": "https://zariel-dev.vercel.app/#website",
       },
       "about": {
-        "@id": "https://zariel.dev/#person",
+        "@id": "https://zariel-dev.vercel.app/#person",
       },
       "mainEntity": {
-        "@id": "https://zariel.dev/#person",
+        "@id": "https://zariel-dev.vercel.app/#person",
       },
     },
     {
       "@type": "Person",
-      "@id": "https://zariel.dev/#person",
+      "@id": "https://zariel-dev.vercel.app/#person",
       "name": personalInfo.name,
-      "url": "https://zariel.dev",
+      "url": "https://zariel-dev.vercel.app",
       "jobTitle": "Full Stack Software Engineer",
       "email": `mailto:${personalInfo.email}`,
-      "image": "https://zariel.dev/imgs/logo.png",
+      "image": "https://zariel-dev.vercel.app/imgs/logo.png",
       "sameAs": socialLinks.map((link) => link.url),
       "knowsAbout": [
         "Software Engineering",
@@ -151,14 +152,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div
-          id="splash"
-          className="splash"
-          role="status"
-          aria-label="Loading portfolio"
-        >
-          <div className="spinner-border" />
-        </div>
+        <RemoveSplash />
         {children}
       </body>
     </html>

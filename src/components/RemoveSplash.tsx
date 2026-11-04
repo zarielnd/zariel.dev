@@ -1,19 +1,21 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const RemoveSplash = () => {
+  const [hidden, setHidden] = useState(false);
+  const [removed, setRemoved] = useState(false);
+
   useEffect(() => {
-    const splash = document.getElementById("splash");
-    if (!splash) return;
+    let removeTimer: ReturnType<typeof setTimeout>;
 
     const hideSplash = () => {
       // trigger fade-out
-      splash.classList.add("splash-hide");
+      setHidden(true);
 
-      // remove from DOM after animation
-      setTimeout(() => {
-        splash.remove();
+      // unmount via React after animation so React's Fiber tree stays in sync with the DOM
+      removeTimer = setTimeout(() => {
+        setRemoved(true);
       }, 500); // must match duration-500
     };
 
@@ -27,14 +29,27 @@ const RemoveSplash = () => {
     } else {
       // Wait for load event
       window.addEventListener("load", hideSplash);
-      return () => {
-        clearTimeout(fallbackTimer);
-        window.removeEventListener("load", hideSplash);
-      };
     }
+
+    return () => {
+      clearTimeout(fallbackTimer);
+      clearTimeout(removeTimer);
+      window.removeEventListener("load", hideSplash);
+    };
   }, []);
 
-  return null;
+  if (removed) return null;
+
+  return (
+    <div
+      id="splash"
+      className={`splash${hidden ? " splash-hide" : ""}`}
+      role="status"
+      aria-label="Loading portfolio"
+    >
+      <div className="spinner-border" />
+    </div>
+  );
 };
 
 export default RemoveSplash;

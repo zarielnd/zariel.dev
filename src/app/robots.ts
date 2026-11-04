@@ -8,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
       },
     ],
-    sitemap: "https://zariel.dev/sitemap.xml",
+    sitemap: "https://zariel-dev.vercel.app/sitemap.xml",
   };
 }

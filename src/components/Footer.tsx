@@ -1,9 +1,11 @@
 import React, { useRef } from "react";
+import Link from "next/link";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import HackedText, { HackedTextHandle } from "./HackedText";
 import { personalInfo, socialLinks } from "@/data/personal";
 import { navItems } from "@/data/navigation";
+import { PRIVACY_POLICY } from "@/data/privacy";
 
 const Footer = () => {
   const footerRef = useRef<HTMLDivElement>(null);
@@ -124,6 +126,12 @@ const Footer = () => {
         <div className="border-t border-gray-800 mt-16 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm">
             <p>{personalInfo.copyright}</p>
+            <Link
+              href={PRIVACY_POLICY.path}
+              className="mt-2 md:mt-0 hover:text-gray-300 transition-colors"
+            >
+              PRIVACY POLICY
+            </Link>
           </div>
         </div>
       </div>

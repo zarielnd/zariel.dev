@@ -11,7 +11,7 @@ export const myProjects: Project[] = [
       "Developing scalable applications using Next.js",
       "Designing responsive and visually polished user interfaces",
     ],
-    href: "https://zariel.dev",
+    href: "https://zariel-dev.vercel.app",
     logo: "/imgs/logo.png",
     image: "/imgs/portfolio.png",
     tags: [

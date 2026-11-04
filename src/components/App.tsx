@@ -9,13 +9,11 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import KprFooter from "@/components/KprFooter";
 import SmoothScroll from "@/hooks/SmoothScroll";
-import RemoveSplash from "@/components/RemoveSplash";
 
 const App = () => {
   return (
     <>
       <SmoothScroll />
-      <RemoveSplash />
       <KprFooter />
       <main className="relative min-h-screen w-screen overflow-x-hidden">
         <Navbar />
