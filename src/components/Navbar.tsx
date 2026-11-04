@@ -4,38 +4,37 @@ import { gsap } from "@/lib/gsap";
 import { navItems } from "@/data/navigation";
 
 const Navbar = () => {
-  const [lastScrollY, setLastScrollY] = useState(0);
   const [isNavVisible, setIsNavVisible] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navContainerRef = useRef<HTMLDivElement>(null);
+  const lastScrollYRef = useRef(0);
 
   // Native window scroll tracker (replaces react-use)
-  const [scrollY, setScrollY] = useState(0);
   useEffect(() => {
     const handleScroll = () => {
-      setScrollY(window.scrollY);
+      const currentScrollY = window.scrollY;
+      const lastScrollY = lastScrollYRef.current;
+
+      if (currentScrollY === 0) {
+        setIsNavVisible(true);
+        navContainerRef.current?.classList.remove("floating-nav");
+      } else if (currentScrollY > lastScrollY) {
+        // Scrolling down
+        setIsNavVisible(false);
+        setIsMobileMenuOpen(false); // close mobile menu on scroll down
+        navContainerRef.current?.classList.add("floating-nav");
+      } else if (currentScrollY < lastScrollY) {
+        // Scrolling up
+        setIsNavVisible(true);
+        navContainerRef.current?.classList.add("floating-nav");
+      }
+
+      lastScrollYRef.current = currentScrollY;
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  useEffect(() => {
-    if (scrollY === 0) {
-      setIsNavVisible(true);
-      navContainerRef.current?.classList.remove("floating-nav");
-    } else if (scrollY > lastScrollY) {
-      // Scrolling down
-      setIsNavVisible(false);
-      setIsMobileMenuOpen(false); // close mobile menu on scroll down
-      navContainerRef.current?.classList.add("floating-nav");
-    } else if (scrollY < lastScrollY) {
-      // Scrolling up
-      setIsNavVisible(true);
-      navContainerRef.current?.classList.add("floating-nav");
-    }
-    setLastScrollY(scrollY);
-  }, [scrollY, lastScrollY]);
 
   // Handle nav container entrance / exit
   useEffect(() => {
