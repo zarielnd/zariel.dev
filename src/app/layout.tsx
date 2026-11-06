@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://zariel-dev.vercel.app"),
+  metadataBase: new URL("https://zariel.dev"),
   title: {
     default: "Zariel Dev — Full Stack Software Engineer",
     template: "%s | Zariel Dev",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     "Tailwind CSS",
     "Web Architecture",
   ],
-  authors: [{ name: personalInfo.name, url: "https://zariel-dev.vercel.app" }],
+  authors: [{ name: personalInfo.name, url: "https://zariel.dev" }],
   creator: personalInfo.name,
   publisher: personalInfo.name,
   robots: {
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     title: "Zariel Dev — Full Stack Software Engineer",
     description:
       "Explore modern, scalable web applications and interactive software engineering projects.",
-    url: "https://zariel-dev.vercel.app",
+    url: "https://zariel.dev",
     siteName: "Zariel Dev",
     locale: "en_US",
     type: "website",
@@ -83,39 +83,39 @@ const jsonLd = {
   "@graph": [
     {
       "@type": "WebSite",
-      "@id": "https://zariel-dev.vercel.app/#website",
-      "url": "https://zariel-dev.vercel.app",
+      "@id": "https://zariel.dev/#website",
+      "url": "https://zariel.dev",
       "name": "Zariel Dev",
       "description":
         "Portfolio of Zariel, a Full Stack Software Engineer specializing in modern web architecture, scalable systems, and creative frontend engineering.",
       "publisher": {
-        "@id": "https://zariel-dev.vercel.app/#person",
+        "@id": "https://zariel.dev/#person",
       },
       "inLanguage": "en-US",
     },
     {
       "@type": "ProfilePage",
-      "@id": "https://zariel-dev.vercel.app/#profilepage",
-      "url": "https://zariel-dev.vercel.app",
+      "@id": "https://zariel.dev/#profilepage",
+      "url": "https://zariel.dev",
       "name": "Zariel Dev — Full Stack Software Engineer",
       "isPartOf": {
-        "@id": "https://zariel-dev.vercel.app/#website",
+        "@id": "https://zariel.dev/#website",
       },
       "about": {
-        "@id": "https://zariel-dev.vercel.app/#person",
+        "@id": "https://zariel.dev/#person",
       },
       "mainEntity": {
-        "@id": "https://zariel-dev.vercel.app/#person",
+        "@id": "https://zariel.dev/#person",
       },
     },
     {
       "@type": "Person",
-      "@id": "https://zariel-dev.vercel.app/#person",
+      "@id": "https://zariel.dev/#person",
       "name": personalInfo.name,
-      "url": "https://zariel-dev.vercel.app",
+      "url": "https://zariel.dev",
       "jobTitle": "Full Stack Software Engineer",
       "email": `mailto:${personalInfo.email}`,
-      "image": "https://zariel-dev.vercel.app/imgs/logo.png",
+      "image": "https://zariel.dev/imgs/logo.png",
       "sameAs": socialLinks.map((link) => link.url),
       "knowsAbout": [
         "Software Engineering",

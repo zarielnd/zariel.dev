@@ -3,13 +3,13 @@ import type { MetadataRoute } from "next";
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: "https://zariel-dev.vercel.app",
+      url: "https://zariel.dev",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 1.0,
     },
     {
-      url: "https://zariel-dev.vercel.app/privacy",
+      url: "https://zariel.dev/privacy",
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 0.3,
